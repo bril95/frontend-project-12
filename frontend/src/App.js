@@ -1,14 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PageLogin from './Components/PageLogin';
-import Page404 from './Components/Page404';
+import LoginPage from './Components/LoginPage';
+import NotFoundPage from './Components/NotFoundPage';
+import ChatMainPage from './Components/ChatMainPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<PageLogin />} />
-        <Route path="/*" element={<Page404 />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<ChatMainPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-const page404 = () => {
+const NotFound = () => {
   return (
     <>
       <h3>Страница не найдена</h3>
@@ -6,4 +6,4 @@ const page404 = () => {
   )
 };
 
-export default page404;
+export default NotFound;
