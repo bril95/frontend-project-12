@@ -1,8 +1,24 @@
-import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useLoginUserMutation } from '../usersApi';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
+  const [loginUser, { isLoading, isError }] = useLoginUserMutation();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values) => {
+    try {
+      const response = await loginUser(values);
+      const userToken = response.data.token;
+      localStorage.setItem('token', userToken);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-items-center h-100">
@@ -16,12 +32,7 @@ const Login = () => {
                     username: Yup.string().required('Required'),
                     password: Yup.string().required('Required'),
                   })}
-                  onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                      alert(JSON.stringify(values, null, 2));
-                      setSubmitting(false);
-                    }, 400);
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   {({ isSubmitting }) => (
                     <Form className="col-12 col-md-6 mt-3 mt-md-0">
@@ -53,8 +64,9 @@ const Login = () => {
                         className="w-100 mb-3 btn btn-outline-primary"
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? 'В процессе...' : 'Войти'}
+                        {isLoading ? 'В процессе...' : 'Войти'}
                       </button>
+                      {isError && <div className="text-danger">Ошибка входа</div>}
                     </Form>
                   )}
                 </Formik>
