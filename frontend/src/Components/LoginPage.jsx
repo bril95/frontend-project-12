@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { useLoginUserMutation } from '../usersApi';
 import { useNavigate } from 'react-router-dom';
 
-
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ const Login = () => {
       localStorage.setItem('token', userToken);
       navigate("/");
     } catch (error) {
-      console.error(error);
+      console.error('ошибка:', error);
     }
   };
 

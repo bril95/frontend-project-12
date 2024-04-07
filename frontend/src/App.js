@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Components/LoginPage';
 import NotFoundPage from './Components/NotFoundPage';
 import ChatMainPage from './Components/ChatMainPage';
+import SignUpPage from './Components/SignUpPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<ChatMainPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
