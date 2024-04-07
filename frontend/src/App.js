@@ -7,7 +7,8 @@ import NotFoundPage from './Components/NotFoundPage';
 import ChatMainPage from './Components/ChatMainPage';
 import SignUpPage from './Components/SignUpPage';
 
-function App() {
+const App = () => {
+  localStorage.clear()
   return (
     <Provider store={store}>
       <BrowserRouter>
