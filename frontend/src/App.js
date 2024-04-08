@@ -1,14 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import { store } from './createStore';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Components/LoginPage';
 import NotFoundPage from './Components/NotFoundPage';
 import ChatMainPage from './Components/ChatMainPage';
 import SignUpPage from './Components/SignUpPage';
 
 const App = () => {
-  localStorage.clear()
   return (
     <Provider store={store}>
       <BrowserRouter>
