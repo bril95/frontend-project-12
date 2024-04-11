@@ -3,16 +3,20 @@ import { Container, Navbar, Card, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useLoginUserMutation } from '../usersApi';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
     try {
       const response = await loginUser(values);
       const userToken = response.data.token;
       localStorage.setItem('token', userToken);
+      dispatch(setCurrentAuthor(values.username));
       navigate("/");
     } catch (error) {
       console.error(error);

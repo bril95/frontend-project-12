@@ -30,6 +30,23 @@ export const usersApi = createApi({
     getChannels: builder.query({
       query: () => '/channels',
     }),
+    newChannel: builder.mutation({
+      query: (channel) => ({
+        method: 'POST',
+        body: channel,
+        url: '/channels',
+      }),
+    }),
+    getMessages: builder.query({
+      query: () => '/messages',
+    }),
+    addMessages: builder.mutation({
+      query: (message) => ({
+        method: 'POST',
+        body: message,
+        url: '/messages',
+      }),
+    })
   }),
 });
 
@@ -37,4 +54,7 @@ export const {
   useAddUserMutation,
   useLoginUserMutation,
   useGetChannelsQuery,
+  useNewChannelMutation,
+  useGetMessagesQuery,
+  useAddMessagesMutation,
 } = usersApi;
