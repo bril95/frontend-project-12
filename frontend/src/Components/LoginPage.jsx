@@ -17,6 +17,7 @@ const Login = () => {
       const userToken = response.data.token;
       localStorage.setItem('token', userToken);
       dispatch(setCurrentAuthor(values.username));
+      localStorage.setItem('author', values.username);
       navigate("/");
     } catch (error) {
       console.error(error);

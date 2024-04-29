@@ -1,18 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetChannelsQuery } from '../usersApi';
+import { useGetChannelsQuery, useAddMessagesMutation } from '../usersApi';
 import { useDispatch } from 'react-redux';
 import { setAuthToken } from '../Slice/authSlice';
 import { setChannels } from '../Slice/channelsSlice';
 import { Container, Row, Col, Navbar, Button, Nav, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
+import { io } from 'socket.io-client';
 
 const MainPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
-  const author = useSelector(selectCurrentAuthor);
+  const author = useSelector(selectCurrentAuthor) || localStorage.getItem('author');
 
   useEffect(() => {
     if (token !== null) {
@@ -20,41 +21,44 @@ const MainPage = () => {
     }
 
     if (token === null) {
-      navigate("/login");
+      navigate('/login');
     }
   }, [token, dispatch, navigate]);
 
-  const { data, error } = useGetChannelsQuery();
+  const { data: channels } = useGetChannelsQuery();
+  const [addMessages] = useAddMessagesMutation();
 
   useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-
-    if (data) {
-      dispatch(setChannels(data));
-      console.log(data);
-    }
-  }, [data, error, dispatch]);
+      dispatch(setChannels(channels))
+  }, [channels, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const message = formData.get('body');
-    console.log(message);
-    console.log(author)
+    const newMessage = { body: formData.get('body'), channelId: channels[0].id, username: author };
+    addMessages(newMessage);
     event.target.reset();
+    const socket = io('http://localhost:5001');
+    socket.on('newMessage', (payload) => {
+      console.log(payload);
+    });
+  };
+
+  const handleExit = (event) => {
+    event.preventDefault();
+    navigate('/login');
+    localStorage.clear();
   };
 
 return (
-  <div className="h-100 bg-light">
+  <div className="h-100 bg-light d-flex flex-column">
     <div className="h-100">
       <div className="h-100" id="chat">
         <div className="d-flex flex-column h-100">
           <Navbar bg="white" expand="lg" className="shadow-sm">
             <Container>
               <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-              <Button variant="primary">Выйти</Button>
+              <Button variant="primary" onClick={handleExit}>Выйти</Button>
             </Container>
           </Navbar>
           <Container className="h-100 my-4 overflow-hidden rounded shadow">
