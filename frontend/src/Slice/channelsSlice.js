@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   channels: [],
+  currentChannel: null,
 };
 
 const channelsSlice = createSlice({
@@ -11,8 +12,13 @@ const channelsSlice = createSlice({
     setChannels(state, { payload }) {
       state.channels = payload;
     },
+    setCurrentChannel(state, { payload }) {
+      state.currentChannel = payload;
+    },
   },
 });
 
-export const { setChannels } = channelsSlice.actions;
+export const { setChannels, setCurrentChannel } = channelsSlice.actions;
+export const channelsReducer = channelsSlice.reducer; 
+export const selectChannels = (state) => state.channels.channels;
 export default channelsSlice.reducer;

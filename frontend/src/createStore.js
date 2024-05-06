@@ -3,6 +3,7 @@ import { usersApi } from './usersApi.js';
 import authReducer from './Slice/authSlice';
 import channelsReducer from './Slice/channelsSlice.js';
 import currentAuthorReducer from './Slice/currentAuthorSlice.js';
+import messagesSlice from './Slice/messagesSlice.js';
 
 export const store = configureStore({
   reducer: {
@@ -10,7 +11,7 @@ export const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     channels: channelsReducer,
     currentAuthor: currentAuthorReducer,
-    
+    messages: messagesSlice,    
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(usersApi.middleware),

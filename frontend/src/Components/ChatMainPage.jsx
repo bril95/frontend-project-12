@@ -1,21 +1,45 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Navbar, Nav, Form, InputGroup } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation } from '../usersApi';
 import { setAuthToken } from '../Slice/authSlice';
-import { setChannels } from '../Slice/channelsSlice';
-import { useSelector } from 'react-redux';
+import { setChannels, selectChannels } from '../Slice/channelsSlice';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
-import { io } from 'socket.io-client';
 import MyModal from './ModalWindow';
+import { io } from 'socket.io-client';
+import { addMessage, selectMessages } from '../Slice/messagesSlice';
 
 const MainPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const channelsStore = useSelector(selectChannels);
   const token = localStorage.getItem('token');
   const author = useSelector(selectCurrentAuthor) || localStorage.getItem('author');
   const [showModal, setShowModal] = useState(false);
+  const messagesStore = useSelector(selectMessages);
+
+  useEffect(() => {
+    const socket = io();
+     
+    const handleMessage = (message) => {
+      dispatch(addMessage(message));
+    };
+  
+    const handleNewChannel = (channel) => {
+      const newStore = [...channelsStore,  channel]
+      dispatch(setChannels(newStore));
+    };
+  
+    socket.on('newMessage', handleMessage);
+    socket.on('newChannel', handleNewChannel);
+  
+    return () => {
+      socket.off('newMessage', handleMessage);
+      socket.off('newChannel', handleNewChannel);
+    };
+  
+  }, [dispatch, channelsStore]);  
 
   useEffect(() => {
     if (token !== null) {
@@ -41,10 +65,6 @@ const MainPage = () => {
     const newMessage = { body: formData.get('body'), channelId: 1, username: author };
     addMessages(newMessage);
     event.target.reset();
-    const socket = io();
-    socket.on('newMessage', (payload) => {
-      console.log(payload);
-    });
   };
 
   const handleExit = () => {
@@ -66,7 +86,7 @@ const MainPage = () => {
     const newChannel = { name: formData.get('channelName')};
     addChannel(newChannel);
     setShowModal(false);
-  };
+    };
 
   return (
     <div className="h-100 bg-light">
@@ -93,17 +113,14 @@ const MainPage = () => {
                     </Button>
                   </div>
                   <Nav className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block" id="channels-box">
-                    <Nav.Item className="w-100">
-                      <Button variant="secondary" className="w-100 rounded-0 text-start">
-                        <span className="me-1">#</span>general
-                      </Button>
-                    </Nav.Item>
-                    <Nav.Item className="w-100">
+                  {channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
+                    <Nav.Item key={index} className="w-100">
                       <Button variant="light" className="w-100 rounded-0 text-start">
-                        <span className="me-1">#</span>random
+                        <span className="me-1">#</span>{channel.name}
                       </Button>
                     </Nav.Item>
-                  </Nav>
+                  ))}
+                </Nav>
                 </Col>
                 <Col className="p-0 h-100">
                   <div className="d-flex flex-column h-100">
@@ -113,7 +130,11 @@ const MainPage = () => {
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
                       <div className='text-break mb-2'>
-                        <b>{author}</b>: 1 <br />
+                      {messagesStore.length > 0 && messagesStore.map((message, index) => (
+                        <div key={index} className='text-break mb-2'>
+                          <b>{message.username}</b>: {message.body} <br />
+                        </div>
+                      ))}
                       </div>
                     </div>
                     <div className="mt-auto px-5 py-3">
