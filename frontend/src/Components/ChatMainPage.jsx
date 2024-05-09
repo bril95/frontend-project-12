@@ -2,44 +2,31 @@ import { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Navbar, Nav, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation } from '../usersApi';
+import { useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation, useGetMessagesQuery } from '../usersApi';
 import { setAuthToken } from '../Slice/authSlice';
-import { setChannels, selectChannels } from '../Slice/channelsSlice';
+import { setChannels, selectChannels, setCurrentChannel, selectCurrentChannel } from '../Slice/channelsSlice';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
 import MyModal from './ModalWindow';
-import { io } from 'socket.io-client';
+import handleSocketEvents from '../socket'
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
 
 const MainPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const channelsStore = useSelector(selectChannels);
+  const currentChannel = useSelector(selectCurrentChannel);
   const token = localStorage.getItem('token');
   const author = useSelector(selectCurrentAuthor) || localStorage.getItem('author');
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
 
   useEffect(() => {
-    const socket = io();
-     
-    const handleMessage = (message) => {
-      dispatch(addMessage(message));
-    };
-  
-    const handleNewChannel = (channel) => {
-      const newStore = [...channelsStore,  channel]
-      dispatch(setChannels(newStore));
-    };
-  
-    socket.on('newMessage', handleMessage);
-    socket.on('newChannel', handleNewChannel);
+    const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
   
     return () => {
-      socket.off('newMessage', handleMessage);
-      socket.off('newChannel', handleNewChannel);
+      subscribeSocket();
     };
-  
-  }, [dispatch, channelsStore]);  
+  }, [dispatch, channelsStore, messagesStore]);
 
   useEffect(() => {
     if (token !== null) {
@@ -54,15 +41,26 @@ const MainPage = () => {
   const { data: channels } = useGetChannelsQuery();
   const [addMessages] = useAddMessagesMutation();
   const [addChannel] = useAddChannelMutation();
+  const {data: allMessages, refetch } = useGetMessagesQuery();
 
   useEffect(() => {
-    dispatch(setChannels(channels));
+    if (channels) {
+      dispatch(setCurrentChannel(channels[0]));
+      dispatch(setChannels(channels));
+    }
   }, [channels, dispatch]);
+  
+  useEffect(() => {
+    if (allMessages && currentChannel) {
+      const channelMessages = allMessages.filter(message => message.channelId === currentChannel.id);
+      dispatch(addMessage(channelMessages));
+    }
+  }, [allMessages, currentChannel, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const newMessage = { body: formData.get('body'), channelId: 1, username: author };
+    const newMessage = { body: formData.get('body'), channelId: currentChannel.id, username: author };
     addMessages(newMessage);
     event.target.reset();
   };
@@ -87,6 +85,15 @@ const MainPage = () => {
     addChannel(newChannel);
     setShowModal(false);
     };
+
+  const handleChangeChannel = async (channel) => {
+    if (channel !== currentChannel) {
+      dispatch(setCurrentChannel(channel));
+      await refetch();
+      const channelMessages = allMessages.filter(message => message.channelId === channel.id);
+      dispatch(addMessage(channelMessages));
+    }
+  };
 
   return (
     <div className="h-100 bg-light">
@@ -115,18 +122,23 @@ const MainPage = () => {
                   <Nav className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block" id="channels-box">
                   {channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
                     <Nav.Item key={index} className="w-100">
-                      <Button variant="light" className="w-100 rounded-0 text-start">
-                        <span className="me-1">#</span>{channel.name}
-                      </Button>
-                    </Nav.Item>
+                    <Button
+                      variant=""
+                      className={`w-100 rounded-0 text-start ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
+                      onClick={() => handleChangeChannel(channel)}
+                    >
+                      <span className="me-1">#</span>{channel.name}
+                    </Button>
+                  </Nav.Item>
+                  
                   ))}
                 </Nav>
                 </Col>
                 <Col className="p-0 h-100">
                   <div className="d-flex flex-column h-100">
                     <div className="bg-light mb-4 p-3 shadow-sm small">
-                      <p className="m-0"><b># general</b></p>
-                      <span className="text-muted">0 сообщений</span>
+                    <p className="m-0"><b># {currentChannel ? currentChannel.name : ''}</b></p>
+                      <span className="text-muted">{messagesStore.length} сообщений</span>
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
                       <div className='text-break mb-2'>
