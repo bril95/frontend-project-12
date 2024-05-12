@@ -9,6 +9,7 @@ import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
 import MyModal from './ModalWindow';
 import handleSocketEvents from '../socket'
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
+import filter from 'leo-profanity';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,8 @@ const MainPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const newMessage = { body: formData.get('body'), channelId: currentChannel.id, username: author };
+    const textMessage = filter.clean(formData.get('body'));
+    const newMessage = { body: textMessage, channelId: currentChannel.id, username: author };
     addMessages(newMessage);
     event.target.reset();
   };
@@ -90,7 +92,7 @@ const MainPage = () => {
   const handleAddChannel = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const newChannel = { name: formData.get('channelName')};
+    const newChannel = { name: filter.clean(formData.get('channelName')) };
     addChannel(newChannel);
     setShowModal(false);
     };

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
@@ -123,7 +123,6 @@ const SignUp = () => {
               </div>
             </Container>
           </div>
-          <div className="Toastify"></div>
         </div>
       </div>
     </div>

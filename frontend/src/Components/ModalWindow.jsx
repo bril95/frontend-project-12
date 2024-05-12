@@ -1,5 +1,5 @@
 import { Modal, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 
 function MyModal({ show, setShowModal, handleSubmitModal, handleClose }) {
   const { t } = useTranslation();
