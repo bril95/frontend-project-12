@@ -10,6 +10,7 @@ import MyModal from './ModalWindow';
 import handleSocketEvents from '../socket'
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
 import filter from 'leo-profanity';
+filter.loadDictionary('ru');
 
 const MainPage = () => {
   const dispatch = useDispatch();
