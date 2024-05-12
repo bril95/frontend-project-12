@@ -5,11 +5,13 @@ import { useLoginUserMutation } from '../usersApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
+import { useTranslation } from 'react-i18next'; 
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
     try {
@@ -38,21 +40,21 @@ const Login = () => {
               <Formik
                 initialValues={{ username: '', password: '' }}
                 validationSchema={Yup.object({
-                  username: Yup.string().required('Обязательное поле'),
-                  password: Yup.string().required('Обязательное поле'),
+                  username: Yup.string().required(t('schema.requiredField')),
+                  password: Yup.string().required(t('schema.requiredField')),
                 })}
                 onSubmit={handleSubmit}
               >
                 {({ isSubmitting }) => (
                   <Form className="col-12 col-md-6">
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('loginPage.enter')}</h1>
                     <div className="mb-3">
                       <Field
                         type="text"
                         name="username"
                         id="username"
                         className="form-control"
-                        placeholder="Ваш ник"
+                        placeholder={t('loginPage.nickname')}
                       />
                       <ErrorMessage name="username" component="div" className="text-danger" />
                     </div>
@@ -62,7 +64,7 @@ const Login = () => {
                         name="password"
                         id="password"
                         className="form-control"
-                        placeholder="Пароль"
+                        placeholder={t('loginPage.password')}
                       />
                       <ErrorMessage name="password" component="div" className="text-danger" />
                     </div>
@@ -71,9 +73,9 @@ const Login = () => {
                       className="w-100 mb-3"
                       disabled={isSubmitting}
                     >
-                      {isLoading ? 'В процессе...' : 'Войти'}
+                      {isLoading ? t('loginPage.isLoading') : t('loginPage.enter')}
                     </Button>
-                    {isError && <div className="text-danger">Неверные имя пользователя или пароль</div>}
+                    {isError && <div className="text-danger">{t('loginPage.error')}</div>}
                   </Form>
                 )}
               </Formik>
@@ -81,7 +83,7 @@ const Login = () => {
           </Card.Body>
           <Card.Footer className="p-4">
             <div className="text-center">
-              <span>Нет аккаунта?</span> <a href="/signup">Регистрация</a>
+              <span>{t('loginPage.withoutAccount')}</span> <a href="/signup">{t('loginPage.registration')}</a>
             </div>
           </Card.Footer>
         </Card>

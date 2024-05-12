@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
+import { useTranslation } from 'react-i18next'; 
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const initialValues = {
     username: '',
@@ -21,22 +23,22 @@ const SignUp = () => {
 
   const validationSchema = Yup.object({
     username: Yup.string()
-      .required('Обязательное поле')
-      .min(3, 'Минимум 3 символа')
-      .max(20, 'Максимум 20 символов'),
+      .required(t('schema.requiredField'))
+      .min(3, t('schema.min3'))
+      .max(20, t('schema.max20')),
     password: Yup.string()
-      .required('Обязательное поле')
-      .min(6, 'Минимум 6 символов'),
+      .required(t('schema.requiredField'))
+      .min(6, t('schema.min6')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-      .required('Обязательное поле'),
+      .oneOf([Yup.ref('password'), null], t('schema.samePassword'))
+      .required(t('schema.requiredField')),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const response = await addUser({ username: values.username, password: values.password });
       if (response.error && response.error.response.status === 409) {
-        setError('Пользователь уже существует');
+        setError(t('signUpPage.errorPassword'));
       } else {
         resetForm();
         setSubmitting(false);
@@ -47,7 +49,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error(error);
-      setError('Произошла ошибка при регистрации');
+      setError(t('signUpPage.errorRegistration'));
     }
   };
   
@@ -74,16 +76,16 @@ const SignUp = () => {
                       >
                         {({ isSubmitting }) => (
                           <Form className="w-50" noValidate>
-                            <h1 className="text-center mb-4">Регистрация</h1>
+                            <h1 className="text-center mb-4">{t('signUpPage.registration')}</h1>
                             <div className="form-floating mb-3">
                               <Field
                                 type="text"
                                 name="username"
                                 id="username"
-                                placeholder="От 3 до 20 символов"
+                                placeholder={t('signUpPage.placeholder.min3max20')}
                                 className="form-control"
                               />
-                              <label htmlFor="username">Имя пользователя</label>
+                              <label htmlFor="username">{t('signUpPage.username')}</label>
                               <ErrorMessage name="username" component="div" className="invalid-tooltip" />
                             </div>
                             <div className="form-floating mb-3">
@@ -91,10 +93,10 @@ const SignUp = () => {
                                 type="password"
                                 name="password"
                                 id="password"
-                                placeholder="Не менее 6 символов"
+                                placeholder={t('signUpPage.placeholder.min6')}
                                 className="form-control"
                               />
-                              <label htmlFor="password">Пароль</label>
+                              <label htmlFor="password">{t('signUpPage.password')}</label>
                               <ErrorMessage name="password" component="div" className="invalid-tooltip" />
                             </div>
                             <div className="form-floating mb-4">
@@ -102,14 +104,14 @@ const SignUp = () => {
                                 type="password"
                                 name="confirmPassword"
                                 id="confirmPassword"
-                                placeholder="Пароли должны совпадать"
+                                placeholder={t('signUpPage.placeholder.samePassword')}
                                 className="form-control"
                               />
-                              <label htmlFor="confirmPassword">Подтвердите пароль</label>
+                              <label htmlFor="confirmPassword">{t('signUpPage.confirmPassword')}</label>
                               <ErrorMessage name="confirmPassword" component="div" className="invalid-tooltip" />
                             </div>
                             <Button type="submit" disabled={isSubmitting} className="w-100 btn btn-primary">
-                              Зарегистрироваться
+                            {t('signUpPage.signUp')}
                             </Button>
                             {error && <div className="text-danger mt-2">{error}</div>}
                           </Form>

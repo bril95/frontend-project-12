@@ -78,14 +78,6 @@ const MainPage = () => {
     setShowModal(false);
   };
 
-  const handleAddChannel = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const newChannel = { name: formData.get('channelName')};
-    addChannel(newChannel);
-    setShowModal(false);
-    };
-
   const handleChangeChannel = async (channel) => {
     if (channel !== currentChannel) {
       dispatch(setCurrentChannel(channel));
@@ -94,6 +86,15 @@ const MainPage = () => {
       dispatch(addMessage(channelMessages));
     }
   };
+
+  const handleAddChannel = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const newChannel = { name: formData.get('channelName')};
+    addChannel(newChannel);
+    setShowModal(false);
+    };
+
 
   return (
     <div className="h-100 bg-light">
