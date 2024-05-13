@@ -93,13 +93,22 @@ const MainPage = () => {
   };
 
   const handleAddChannel = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const newChannel = { name: filter.clean(formData.get('channelName')) };
+    const newChannel = { name: filter.clean(event.channelName) };
     addChannel(newChannel);
     setShowModal(false);
     };
 
+    const renderMessages = () => {
+      return (
+        messagesStore.length > 0 && messagesStore.map((message, index) => (
+          message.channelId === currentChannel.id && (
+            <div key={index} className='text-break mb-2'>
+              <b>{message.username}</b>: {message.body} <br />
+            </div>
+          )
+        ))
+      );      
+    };
 
   return (
     <div className='h-100 bg-light'>
@@ -148,11 +157,7 @@ const MainPage = () => {
                     </div>
                     <div id='messages-box' className='chat-messages overflow-auto px-5 '>
                       <div className='text-break mb-2'>
-                      {messagesStore.length > 0 && messagesStore.map((message, index) => (
-                        <div key={index} className='text-break mb-2'>
-                          <b>{message.username}</b>: {message.body} <br />
-                        </div>
-                      ))}
+                      {renderMessages()}
                       </div>
                     </div>
                     <div className='mt-auto px-5 py-3'>
