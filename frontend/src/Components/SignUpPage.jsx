@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
 import { useTranslation } from 'react-i18next';
-import validationSignUpPage from '../validation'
+import { validationSignUpPage } from '../validation'
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();

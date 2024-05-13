@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
 import { useTranslation } from 'react-i18next';
-import validationSchemaLoginPage from '../validation'
+import { validationSchemaLoginPage } from '../validation'
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();

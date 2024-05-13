@@ -18,11 +18,13 @@ const validationSchemaLoginPage = (t) => Yup.object({
   password: Yup.string().required(t('schema.requiredField')),
 });
 
-const validationSchemaNewChat = (t) => Yup.object({
+const validationSchemaNewChat = (t, channelsName) => Yup.object({
   channelName: Yup.string()
   .required(t('schema.requiredField'))
+  .notOneOf(channelsName, t('schema.sameNameChannel'))
   .min(3, t('schema.min3'))
   .max(20, t('schema.max20')),
 });
 
-export default (validationSignUpPage, validationSchemaLoginPage, validationSchemaNewChat);
+export { validationSignUpPage, validationSchemaLoginPage, validationSchemaNewChat };
+

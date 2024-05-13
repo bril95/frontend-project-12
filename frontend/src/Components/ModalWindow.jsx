@@ -1,10 +1,14 @@
 import { Modal, Button, Form, } from 'react-bootstrap';
 import { Formik, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import validationSchemaNewChat from '../validation'
+import { validationSchemaNewChat } from '../validation'
+import { useSelector } from 'react-redux';
+import { selectChannels} from '../Slice/channelsSlice';
 
 function MyModal({ show, setShowModal, handleSubmitModal, handleClose }) {
   const { t } = useTranslation();
+  const channelsStore = useSelector(selectChannels);
+  const channelsName = channelsStore.map(channels => channels.name)
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -14,7 +18,7 @@ function MyModal({ show, setShowModal, handleSubmitModal, handleClose }) {
       <Modal.Body>
         <Formik
           initialValues={{ channelName: '' }}
-          validationSchema={validationSchemaNewChat(t)}
+          validationSchema={validationSchemaNewChat(t, channelsName)}
           onSubmit={handleSubmitModal}
         >
           {({ handleSubmit, handleChange, values, errors, touched }) => (
