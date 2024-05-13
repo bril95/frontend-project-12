@@ -15,6 +15,15 @@ const resources = {
         isLoading: 'В процессе...',
       },
       chatMainPage: {
+        exit: 'Выйти',
+        channels: 'Каналы',
+        placeholderMessage: 'Введите сообщение...',
+        messages: {
+          key_zero: '{{count}} сообщений',
+          key_one: '{{count}} сообщение',
+          key_few: '{{count}} сообщения',
+          key_many: '{{count}} сообщений',
+        }
       },
       signUpPage: {
         placeholder: {
