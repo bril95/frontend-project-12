@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Row, Col, Navbar, Nav, Form, InputGroup } from 'react-bootstrap';
+import { Button, Container, Row, Col, Navbar, Nav, Form, InputGroup, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation, useGetMessagesQuery } from '../usersApi';
@@ -98,17 +98,60 @@ const MainPage = () => {
     setShowModal(false);
     };
 
-    const renderMessages = () => {
-      return (
-        messagesStore.length > 0 && messagesStore.map((message, index) => (
-          message.channelId === currentChannel.id && (
-            <div key={index} className='text-break mb-2'>
-              <b>{message.username}</b>: {message.body} <br />
-            </div>
-          )
-        ))
-      );      
+  const renderMessages = () => {
+    return (
+      messagesStore.length > 0 && messagesStore.map((message, index) => (
+        message.channelId === currentChannel.id && (
+          <div key={index} className='text-break mb-2'>
+            <b>{message.username}</b>: {message.body} <br />
+          </div>
+        )
+      ))
+    );      
+  };
+
+  const renderChannels = () => {
+    const handleDeleteChannel = (channel) => {
+      console.log(`Delet`);
     };
+  
+    const handleRenameChannel = (channel) => {
+      console.log(`Rename`);
+    };
+  
+    return (
+      channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
+        <div key={index} className="d-flex dropdown btn-group">
+          <button
+            type="button"
+            className={`w-100 rounded-0 text-start text-truncate btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
+            onClick={() => handleChangeChannel(channel)}
+          >
+            <span className="me-1">#</span>{channel.name}
+          </button>
+          {channel.removable && (
+            <Dropdown>
+              <Dropdown.Toggle
+                split
+                variant=''
+                className={`dropdown-toggle-split btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
+                id={`dropdown-split-basic-${index}`}
+                style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+              >
+                <span className="visually-hidden">Управление каналом</span>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => handleDeleteChannel(channel)}>Удалить</Dropdown.Item>
+                <Dropdown.Item onClick={() => handleRenameChannel(channel)}>Переименовать</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
+        </div>
+      ))
+    );    
+  }
+  
 
   return (
     <div className='h-100 bg-light'>
@@ -135,19 +178,8 @@ const MainPage = () => {
                     </Button>
                   </div>
                   <Nav className='flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block' id='channels-box'>
-                  {channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
-                    <Nav.Item key={index} className='w-100'>
-                    <Button
-                      variant=''
-                      className={`w-100 rounded-0 text-start ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
-                      onClick={() => handleChangeChannel(channel)}
-                    >
-                      <span className='me-1'>#</span>{channel.name}
-                    </Button>
-                  </Nav.Item>
-                  
-                  ))}
-                </Nav>
+                    {renderChannels()}
+                  </Nav>
                 </Col>
                 <Col className='p-0 h-100'>
                   <div className='d-flex flex-column h-100'>
