@@ -20,23 +20,23 @@ const Login = () => {
       localStorage.setItem('token', userToken);
       dispatch(setCurrentAuthor(values.username));
       localStorage.setItem('author', values.username);
-      navigate("/");
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="h-100 bg-light">
-      <Navbar bg="light" expand="lg" className="shadow-sm">
+    <div className='h-100 bg-light'>
+      <Navbar bg='light' expand='lg' className='shadow-sm'>
         <Container>
-          <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
+          <Navbar.Brand href='/'>Hexlet Chat</Navbar.Brand>
         </Container>
       </Navbar>
-      <Container fluid className="h-100 d-flex justify-content-center align-items-center">
-        <Card className="shadow-sm">
-          <Card.Body className="p-5">
-            <div className="d-flex justify-content-center">
+      <Container fluid className='h-100 d-flex justify-content-center align-items-center'>
+        <Card className='shadow-sm'>
+          <Card.Body className='p-5'>
+            <div className='d-flex justify-content-center'>
               <Formik
                 initialValues={{ username: '', password: '' }}
                 validationSchema={Yup.object({
@@ -46,44 +46,44 @@ const Login = () => {
                 onSubmit={handleSubmit}
               >
                 {({ isSubmitting }) => (
-                  <Form className="col-12 col-md-6">
-                    <h1 className="text-center mb-4">{t('loginPage.enter')}</h1>
-                    <div className="mb-3">
+                  <Form className='col-12 col-md-6'>
+                    <h1 className='text-center mb-4'>{t('loginPage.enter')}</h1>
+                    <div className='mb-3'>
                       <Field
-                        type="text"
-                        name="username"
-                        id="username"
-                        className="form-control"
+                        type='text'
+                        name='username'
+                        id='username'
+                        className='form-control'
                         placeholder={t('loginPage.nickname')}
                       />
-                      <ErrorMessage name="username" component="div" className="text-danger" />
+                      <ErrorMessage name='username' component='div' className='text-danger' />
                     </div>
-                    <div className="mb-4">
+                    <div className='mb-4'>
                       <Field
-                        type="password"
-                        name="password"
-                        id="password"
-                        className="form-control"
+                        type='password'
+                        name='password'
+                        id='password'
+                        className='form-control'
                         placeholder={t('loginPage.password')}
                       />
-                      <ErrorMessage name="password" component="div" className="text-danger" />
+                      <ErrorMessage name='password' component='div' className='text-danger' />
                     </div>
                     <Button
-                      type="submit"
-                      className="w-100 mb-3"
+                      type='submit'
+                      className='w-100 mb-3'
                       disabled={isSubmitting}
                     >
                       {isLoading ? t('loginPage.isLoading') : t('loginPage.enter')}
                     </Button>
-                    {isError && <div className="text-danger">{t('loginPage.error')}</div>}
+                    {isError && <div className='text-danger'>{t('loginPage.error')}</div>}
                   </Form>
                 )}
               </Formik>
             </div>
           </Card.Body>
-          <Card.Footer className="p-4">
-            <div className="text-center">
-              <span>{t('loginPage.withoutAccount')}</span> <a href="/signup">{t('loginPage.registration')}</a>
+          <Card.Footer className='p-4'>
+            <div className='text-center'>
+              <span>{t('loginPage.withoutAccount')}</span> <a href='/signup'>{t('loginPage.registration')}</a>
             </div>
           </Card.Footer>
         </Card>
