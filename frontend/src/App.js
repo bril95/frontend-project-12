@@ -8,7 +8,7 @@ import NotFoundPage from './Components/NotFoundPage';
 import ChatMainPage from './Components/ChatMainPage';
 import SignUpPage from './Components/SignUpPage';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n';
+import i18n from './Internationalization/i18n';
 
 const App = () => {
   return (

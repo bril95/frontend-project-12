@@ -1,12 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Container, Navbar, Card, Button } from 'react-bootstrap';
-import * as Yup from 'yup';
 import { useAddUserMutation } from '../usersApi';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
+import validationSignUpPage from '../validation'
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
@@ -21,18 +21,7 @@ const SignUp = () => {
     confirmPassword: '',
   };
 
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .required(t('schema.requiredField'))
-      .min(3, t('schema.min3'))
-      .max(20, t('schema.max20')),
-    password: Yup.string()
-      .required(t('schema.requiredField'))
-      .min(6, t('schema.min6')),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], t('schema.samePassword'))
-      .required(t('schema.requiredField')),
-  });
+  const validationSchema = validationSignUpPage(t);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {

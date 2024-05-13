@@ -1,11 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Container, Navbar, Card, Button } from 'react-bootstrap';
-import * as Yup from 'yup';
 import { useLoginUserMutation } from '../usersApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
+import validationSchemaLoginPage from '../validation'
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
@@ -38,11 +38,8 @@ const Login = () => {
           <Card.Body className='p-5'>
             <div className='d-flex justify-content-center'>
               <Formik
-                initialValues={{ username: '', password: '' }}
-                validationSchema={Yup.object({
-                  username: Yup.string().required(t('schema.requiredField')),
-                  password: Yup.string().required(t('schema.requiredField')),
-                })}
+                initialValues = {{ username: '', password: '' }}
+                validationSchema = {validationSchemaLoginPage(t)}
                 onSubmit={handleSubmit}
               >
                 {({ isSubmitting }) => (
