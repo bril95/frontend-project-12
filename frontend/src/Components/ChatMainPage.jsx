@@ -15,6 +15,7 @@ import { addMessage, selectMessages } from '../Slice/messagesSlice';
 import { useTranslation } from 'react-i18next'; 
 import filter from 'leo-profanity';
 import RenameChannelModal from './ModalWindows/RenameChannel';
+import DeleteChannelModal from './ModalWindows/RemoveChannel';
 
 filter.loadDictionary('ru');
 
@@ -118,21 +119,28 @@ const MainPage = () => {
   };
 
   const [showRenameModal, setShowRenameModal] = useState(false);
-  const [selectedRenameChannelId, setSelectedRenameChannelId] = useState(null);
+  const [selectedRenameChannel, setSelectedRenameChannel] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const renderChannels =() => {
     const handleRenameChannel = (channel) => {
-      setSelectedRenameChannelId(channel.id);
+      setSelectedRenameChannel(channel);
       setShowRenameModal(true);
     };
   
     const handleRename = (newName) => {
       const editedChannel = { name: newName };
-      editChannel({ id: selectedRenameChannelId, nameChannel: editedChannel });
+      editChannel({ id: selectedRenameChannel.id, nameChannel: editedChannel });
     };
   
     const handleDeleteChannel = (channel) => {
-      removeChannel(channel.id);
+      setSelectedRenameChannel(channel);
+      setShowDeleteModal(true);
+    };
+
+    const handleDelete = () => {
+      removeChannel(selectedRenameChannel.id);
+      setShowDeleteModal(false);
     };
   
     return (
@@ -146,7 +154,7 @@ const MainPage = () => {
             >
               <span className='me-1'>#</span>{channel.name}
             </button>
-            {channel.removable && index >= 2 && (
+            {channel.removable && (
               <Dropdown>
                 <Dropdown.Toggle
                   split
@@ -170,7 +178,13 @@ const MainPage = () => {
           show={showRenameModal}
           handleClose={() => setShowRenameModal(false)}
           handleRename={handleRename}
+          initialValues={{ name: selectedRenameChannel ? selectedRenameChannel.name : '' }}
         />
+        <DeleteChannelModal
+        show={showDeleteModal}
+        handleClose={() => setShowDeleteModal(false)}
+        handleDelete={handleDelete}
+      />
       </>
     );
   }

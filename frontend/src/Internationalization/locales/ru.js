@@ -48,6 +48,11 @@ const ru = {
         renameChannel: 'Переименовать канал',
         newName: 'Новое имя канала',
       },
+      deleteChannel: {
+        deleteChannel: 'Удалить канал',
+        confirmation: 'Уверены?',
+        delete: 'Удалить'
+      },
     },
     schema: {
       requiredField: 'Обязательное поле',
