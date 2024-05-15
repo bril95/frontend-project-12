@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Navbar, Nav, Form, InputGroup, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation, useGetMessagesQuery } from '../usersApi';
+import { 
+  useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation,
+  useGetMessagesQuery, useEditChannelMutation, useRemoveChannelMutation, 
+} from '../usersApi';
 import { setAuthToken } from '../Slice/authSlice';
 import { setChannels, selectChannels, setCurrentChannel, selectCurrentChannel } from '../Slice/channelsSlice';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
-import MyModal from './ModalWindow';
-import handleSocketEvents from '../socket'
+import AddChannel from './ModalWindows/AddChannel';
+import handleSocketEvents from '../socket';
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
 import { useTranslation } from 'react-i18next'; 
 import filter from 'leo-profanity';
+import RenameChannelModal from './ModalWindows/RenameChannel';
+
 filter.loadDictionary('ru');
 
 const MainPage = () => {
@@ -45,7 +50,9 @@ const MainPage = () => {
   const { data: channels } = useGetChannelsQuery();
   const [addMessages] = useAddMessagesMutation();
   const [addChannel] = useAddChannelMutation();
-  const {data: allMessages, refetch } = useGetMessagesQuery();
+  const { data: allMessages, refetch } = useGetMessagesQuery();
+  const [editChannel] = useEditChannelMutation();
+  const [removeChannel] = useRemoveChannelMutation();
 
   useEffect(() => {
     if (channels) {
@@ -96,7 +103,7 @@ const MainPage = () => {
     const newChannel = { name: filter.clean(event.channelName) };
     addChannel(newChannel);
     setShowModal(false);
-    };
+  };
 
   const renderMessages = () => {
     return (
@@ -110,46 +117,62 @@ const MainPage = () => {
     );      
   };
 
-  const renderChannels = () => {
-    const handleDeleteChannel = (channel) => {
-      console.log(`Delet`);
+  const [showRenameModal, setShowRenameModal] = useState(false);
+  const [selectedRenameChannelId, setSelectedRenameChannelId] = useState(null);
+
+  const renderChannels =() => {
+    const handleRenameChannel = (channel) => {
+      setSelectedRenameChannelId(channel.id);
+      setShowRenameModal(true);
     };
   
-    const handleRenameChannel = (channel) => {
-      console.log(`Rename`);
+    const handleRename = (newName) => {
+      const editedChannel = { name: newName };
+      editChannel({ id: selectedRenameChannelId, nameChannel: editedChannel });
+    };
+  
+    const handleDeleteChannel = (channel) => {
+      removeChannel(channel.id);
     };
   
     return (
-      channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
-        <div key={index} className="d-flex dropdown btn-group">
-          <button
-            type="button"
-            className={`w-100 rounded-0 text-start text-truncate btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
-            onClick={() => handleChangeChannel(channel)}
-          >
-            <span className="me-1">#</span>{channel.name}
-          </button>
-          {channel.removable && (
-            <Dropdown>
-              <Dropdown.Toggle
-                split
-                variant=''
-                className={`dropdown-toggle-split btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
-                id={`dropdown-split-basic-${index}`}
-                style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-              >
-                <span className="visually-hidden">Управление каналом</span>
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleDeleteChannel(channel)}>Удалить</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleRenameChannel(channel)}>Переименовать</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          )}
-        </div>
-      ))
-    );    
+      <>
+        {channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
+          <div key={index} className='d-flex dropdown btn-group'>
+            <button
+              type='button'
+              className={`w-100 rounded-0 text-start text-truncate btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
+              onClick={() => handleChangeChannel(channel)}
+            >
+              <span className='me-1'>#</span>{channel.name}
+            </button>
+            {channel.removable && index >= 2 && (
+              <Dropdown>
+                <Dropdown.Toggle
+                  split
+                  variant=''
+                  className={`dropdown-toggle-split btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
+                  id={`dropdown-split-basic-${index}`}
+                  style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+                >
+                  <span className='visually-hidden'>Управление каналом</span>
+                </Dropdown.Toggle>
+      
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleDeleteChannel(channel)}>Удалить</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleRenameChannel(channel)}>Переименовать</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </div>
+        ))}
+        <RenameChannelModal
+          show={showRenameModal}
+          handleClose={() => setShowRenameModal(false)}
+          handleRename={handleRename}
+        />
+      </>
+    );
   }
   
 
@@ -211,7 +234,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <MyModal show={showModal} setShowModal={setShowModal} handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
+      <AddChannel show={showModal} setShowModal={setShowModal} handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
     </div>
   );
 };

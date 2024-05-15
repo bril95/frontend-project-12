@@ -46,7 +46,20 @@ export const usersApi = createApi({
         body: message,
         url: '/messages',
       }),
-    })
+    }),
+    editChannel: builder.mutation({
+      query: ({ id, nameChannel }) => ({
+        method: 'PATCH',
+        body: nameChannel,
+        url: `/channels/${id}`,
+      }),
+    }),
+    removeChannel: builder.mutation({
+      query: (id) => ({
+        method: 'DELETE',
+        url: `/channels/${id}`,
+      }),
+    }),
   }),
 });
 
@@ -57,4 +70,6 @@ export const {
   useAddChannelMutation,
   useGetMessagesQuery,
   useAddMessagesMutation,
+  useEditChannelMutation,
+  useRemoveChannelMutation
 } = usersApi;

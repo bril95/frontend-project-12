@@ -37,11 +37,17 @@ const ru = {
     notFoundPage: {
       pageNotFound: 'Страница не найдена'
     },
-    modalWindow: {
-      addChannel: 'Добавить канал',
-      channelName: 'Имя канала',
+    modalWindows: {
       cancel: 'Отмена',
       submit: 'Отправить',
+      addChannel: {
+        addChannel: 'Добавить канал',
+        channelName: 'Имя канала',
+      },
+      renameChannel: {
+        renameChannel: 'Переименовать канал',
+        newName: 'Новое имя канала',
+      },
     },
     schema: {
       requiredField: 'Обязательное поле',
@@ -50,6 +56,7 @@ const ru = {
       min6: 'Минимум 6 символов',
       samePassword: 'Пароли должны совпадать',
       sameNameChannel: 'Это имя канала уже используется',
+      enterNewName: 'Введите новое имя канала',
     }
   },
 };
