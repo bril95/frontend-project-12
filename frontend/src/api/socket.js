@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
-import { addMessage } from './Slice/messagesSlice';
-import { setChannels, renameChannel, deleteChannel } from './Slice/channelsSlice';
+import { addMessage } from '../Slice/messagesSlice';
+import { setChannels, renameChannel, deleteChannel } from '../Slice/channelsSlice';
 
 const socket = io();
 

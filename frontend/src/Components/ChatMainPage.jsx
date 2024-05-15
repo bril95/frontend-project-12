@@ -5,19 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { 
   useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation,
   useGetMessagesQuery, useEditChannelMutation, useRemoveChannelMutation, 
-} from '../usersApi';
+} from '../api/usersApi';
 import { setAuthToken } from '../Slice/authSlice';
 import { setChannels, selectChannels, setCurrentChannel, selectCurrentChannel } from '../Slice/channelsSlice';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
 import AddChannel from './ModalWindows/AddChannel';
-import handleSocketEvents from '../socket';
+import handleSocketEvents from '../api/socket';
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
 import { useTranslation } from 'react-i18next'; 
 import filter from 'leo-profanity';
 import RenameChannelModal from './ModalWindows/RenameChannel';
 import DeleteChannelModal from './ModalWindows/RemoveChannel';
-
-filter.loadDictionary('ru');
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -29,6 +27,7 @@ const MainPage = () => {
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
+  filter.loadDictionary('ru');
 
   useEffect(() => {
     const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);

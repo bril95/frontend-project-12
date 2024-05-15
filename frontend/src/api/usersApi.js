@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import routes from './routes';
 
 export const usersApi = createApi({
   reducerPath: 'users',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/',
+    baseUrl: routes.defaultApi(),
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {
@@ -17,47 +18,47 @@ export const usersApi = createApi({
       query: (user) => ({
         method: 'POST',
         body: user,
-        url: '/signup',
+        url: routes.path.signUpPath(),
       }),
     }),
     loginUser: builder.mutation({
       query: (user) => ({
         method: 'POST',
         body: user,
-        url: '/login',
+        url: routes.path.loginPath(),
       }),
     }),
     getChannels: builder.query({
-      query: () => '/channels',
+      query: () => routes.path.channelsPath(),
     }),
     addChannel: builder.mutation({
       query: (channel) => ({
         method: 'POST',
         body: channel,
-        url: '/channels',
+        url: routes.path.channelsPath(),
       }),
     }),
     getMessages: builder.query({
-      query: () => '/messages',
+      query: () => routes.path.messagesPath(),
     }),
     addMessages: builder.mutation({
       query: (message) => ({
         method: 'POST',
         body: message,
-        url: '/messages',
+        url: routes.path.messagesPath(),
       }),
     }),
     editChannel: builder.mutation({
       query: ({ id, nameChannel }) => ({
         method: 'PATCH',
         body: nameChannel,
-        url: `/channels/${id}`,
+        url: routes.path.messagesPath(id),
       }),
     }),
     removeChannel: builder.mutation({
       query: (id) => ({
         method: 'DELETE',
-        url: `/channels/${id}`,
+        url: routes.path.messagesPath(id),
       }),
     }),
   }),

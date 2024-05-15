@@ -1,7 +1,7 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { validationSchemaChat } from '../../validation'
+import { validationSchemaChat } from '../../Internationalization/validation'
 import { useSelector } from 'react-redux';
 import { selectChannels } from '../../Slice/channelsSlice';
 

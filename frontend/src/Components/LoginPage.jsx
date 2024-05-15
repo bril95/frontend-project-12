@@ -1,11 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Container, Navbar, Card, Button } from 'react-bootstrap';
-import { useLoginUserMutation } from '../usersApi';
+import { useLoginUserMutation } from '../api/usersApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
 import { useTranslation } from 'react-i18next';
-import { validationSchemaLoginPage } from '../validation'
+import { validationSchemaLoginPage } from '../Internationalization/validation'
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();

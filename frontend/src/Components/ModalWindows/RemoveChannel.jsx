@@ -11,7 +11,7 @@ const DeleteChannelModal = ({ show, handleClose, handleDelete }) => {
       </Modal.Header>
       <Modal.Body>
         <p className="lead">{t('modalWindows.deleteChannel.confirmation')}</p>
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-between">
           <Button variant="secondary" onClick={handleClose} className="me-2">
             {t('modalWindows.cancel')}
           </Button>

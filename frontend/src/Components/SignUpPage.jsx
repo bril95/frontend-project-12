@@ -1,12 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Container, Navbar, Card, Button } from 'react-bootstrap';
-import { useAddUserMutation } from '../usersApi';
+import { useAddUserMutation } from '../api/usersApi';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
 import { useTranslation } from 'react-i18next';
-import { validationSignUpPage } from '../validation'
+import { validationSignUpPage } from '../Internationalization/validation'
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
