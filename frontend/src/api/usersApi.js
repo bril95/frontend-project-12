@@ -52,13 +52,13 @@ export const usersApi = createApi({
       query: ({ id, nameChannel }) => ({
         method: 'PATCH',
         body: nameChannel,
-        url: routes.path.messagesPath(id),
+        url: routes.path.channelIdPath(id),
       }),
     }),
     removeChannel: builder.mutation({
       query: (id) => ({
         method: 'DELETE',
-        url: routes.path.messagesPath(id),
+        url: routes.path.channelIdPath(id),
       }),
     }),
   }),

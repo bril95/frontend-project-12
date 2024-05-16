@@ -14,14 +14,13 @@ const SignUp = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const validationSchema = validationSignUpPage(t);
+  
   const initialValues = {
     username: '',
     password: '',
     confirmPassword: '',
   };
-
-  const validationSchema = validationSignUpPage(t);
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
