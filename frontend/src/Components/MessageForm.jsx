@@ -3,12 +3,10 @@ import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { selectCurrentChannel } from '../Slice/channelsSlice';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
 import { useAddMessagesMutation } from '../api/usersApi';
 
-const MessageForm = () => {
-  const currentChannel = useSelector(selectCurrentChannel);
+const MessageForm = ({ currentChannel }) => {
   const author = useSelector(selectCurrentAuthor) || localStorage.getItem('author');
   const [textMessage, setTextMessage] = useState('');
   const [addMessages] = useAddMessagesMutation();

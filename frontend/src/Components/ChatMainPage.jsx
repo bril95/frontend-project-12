@@ -30,7 +30,8 @@ const MainPage = () => {
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
   filter.loadDictionary('ru');
-
+  const defaultChannel = channelsStore.find((channel) => channel.name === 'general')
+  
   useEffect(() => {
     const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
   
@@ -92,43 +93,52 @@ const MainPage = () => {
     setShowModal(false);
   };
 
-  const handleChangeChannel = async (channel) => {
-    if (channel !== currentChannel) {
-      dispatch(setCurrentChannel(channel));
-      await refetch();
-      const channelMessages = allMessages.filter(message => message.channelId === channel.id);
-      dispatch(addMessage(channelMessages));
-    }
-  };
-
   const handleAddChannel = async (event) => {
     const newChannel = { name: filter.clean(event.channelName) };
-    addChannel(newChannel);
+    const { data: createdChannel } = await addChannel(newChannel);
+    dispatch(setCurrentChannel(createdChannel));
     setShowModal(false);
   };
 
   const [showRenameModal, setShowRenameModal] = useState(false);
-  const [selectedRenameChannel, setSelectedRenameChannel] = useState(null);
+  const [selectedClickChannel, setSelectedClickChannel] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const renderChannels =() => {
+  const renderChannels = () => {
+    const handleChangeChannel = async (channel) => {
+      if (channel !== currentChannel) {
+        dispatch(setCurrentChannel(channel));
+        await refetch();
+      }
+    };
+    
     const handleRenameChannel = (channel) => {
-      setSelectedRenameChannel(channel);
+      setSelectedClickChannel(channel);
       setShowRenameModal(true);
     };
   
     const handleRename = (newName) => {
       const editedChannel = { name: newName };
-      editChannel({ id: selectedRenameChannel.id, nameChannel: editedChannel });
+      editChannel({ id: selectedClickChannel.id, nameChannel: editedChannel });
+      const updatedChannel = { ...currentChannel, name: newName };
+      dispatch(setCurrentChannel(updatedChannel));
+      setShowRenameModal(false);
     };
   
     const handleDeleteChannel = (channel) => {
-      setSelectedRenameChannel(channel);
+      setSelectedClickChannel(channel);
       setShowDeleteModal(true);
     };
 
-    const handleDelete = () => {
-      removeChannel(selectedRenameChannel.id);
+    const handleDelete = async () => {
+      removeChannel(selectedClickChannel.id);
+      if (currentChannel && currentChannel.id === selectedClickChannel.id) {
+        dispatch(setCurrentChannel(defaultChannel));
+        const { data: updatedMessages } = await refetch();
+        const channelMessages = updatedMessages.filter(message => message.channelId === defaultChannel.id);
+        dispatch(addMessage(channelMessages));
+
+      }
       setShowDeleteModal(false);
     };
   
@@ -167,7 +177,7 @@ const MainPage = () => {
           show={showRenameModal}
           handleClose={() => setShowRenameModal(false)}
           handleRename={handleRename}
-          initialValues={{ name: selectedRenameChannel ? selectedRenameChannel.name : '' }}
+          initialValues={{ name: selectedClickChannel ? selectedClickChannel.name : '' }}
         />
         <DeleteChannelModal
         show={showDeleteModal}
@@ -217,7 +227,7 @@ const MainPage = () => {
                       <MessageList messages={messagesStore} currentChannel={currentChannel} />
                     </div>
                     <div className='mt-auto px-5 py-3'>
-                      <MessageForm handleSubmit={handleSubmit} />
+                      <MessageForm handleSubmit={handleSubmit} currentChannel={currentChannel}/>
                     </div>
                   </div>
                 </Col>
