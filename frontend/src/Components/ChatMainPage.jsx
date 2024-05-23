@@ -59,12 +59,17 @@ const MainPage = () => {
   const [removeChannel] = useRemoveChannelMutation();
 
   useEffect(() => {
-    if (channels) {
-      dispatch(setCurrentChannel(channels[0]));
-      dispatch(setChannels(channels));
+    try {
+      if (channels) {
+        dispatch(setCurrentChannel(channels[0]));
+        dispatch(setChannels(channels));
+      }
+    } catch (error) {
+      toast.error(t('chatMainPage.toastDataLoadingError'));
+      console.error(error);
     }
-  }, [channels, dispatch]);
-  
+  }, [channels, dispatch, t]);
+
   useEffect(() => {
     if (allMessages && currentChannel) {
       const channelMessages = allMessages.filter(message => message.channelId === currentChannel.id);
@@ -72,13 +77,18 @@ const MainPage = () => {
     }
   }, [allMessages, currentChannel, dispatch]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const textMessage = filter.clean(formData.get('body'));
-    const newMessage = { body: textMessage, channelId: currentChannel.id, username: author };
-    addMessages(newMessage);
-    event.target.reset();
+    try {
+      const formData = new FormData(event.target);
+      const textMessage = filter.clean(formData.get('body'));
+      const newMessage = { body: textMessage, channelId: currentChannel.id, username: author };
+      await addMessages(newMessage);
+      event.target.reset();
+    } catch (error) {
+      toast.error(t('chatMainPage.toastError'));
+      console.error(error);
+    }
   };
 
   const handleExit = () => {
@@ -136,15 +146,20 @@ const MainPage = () => {
     };
 
     const handleDelete = async () => {
-      removeChannel(selectedClickChannel.id);
-      if (currentChannel && currentChannel.id === selectedClickChannel.id) {
-        dispatch(setCurrentChannel(defaultChannel));
-        const { data: updatedMessages } = await refetch();
-        const channelMessages = updatedMessages.filter(message => message.channelId === defaultChannel.id);
-        dispatch(addMessage(channelMessages));
+      try {
+        removeChannel(selectedClickChannel.id);
+        if (currentChannel && currentChannel.id === selectedClickChannel.id) {
+          dispatch(setCurrentChannel(defaultChannel));
+          const { data: updatedMessages } = await refetch();
+          const channelMessages = updatedMessages.filter(message => message.channelId === defaultChannel.id);
+          dispatch(addMessage(channelMessages));
+        }
+        toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
+        setShowDeleteModal(false);
+      } catch (error) {
+        toast.error(t('modalWindows.deleteChannel.toastErrorAddName'));
+        console.error(error);
       }
-      toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
-      setShowDeleteModal(false);
     };
   
     return (

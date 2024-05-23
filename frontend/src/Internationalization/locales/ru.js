@@ -13,6 +13,8 @@ const ru = {
       exit: 'Выйти',
       channels: 'Каналы',
       placeholderMessage: 'Введите сообщение...',
+      toastError: 'Ошибка сети',
+      toastDataLoadingError: 'Ошибка в загрузке данных',
       messages: {
         key_zero: '{{count}} сообщений',
         key_one: '{{count}} сообщение',
@@ -56,6 +58,7 @@ const ru = {
         confirmation: 'Уверены?',
         delete: 'Удалить',
         toastDeleteChannel: 'Канал удален!',
+        toastErrorAddName: 'Ошибка при удалении канала!',
       },
     },
     schema: {
