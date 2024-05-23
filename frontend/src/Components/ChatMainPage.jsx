@@ -18,6 +18,7 @@ import RenameChannelModal from './ModalWindows/RenameChannel';
 import DeleteChannelModal from './ModalWindows/RemoveChannel';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
+import { toast } from 'react-toastify';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -95,11 +96,15 @@ const MainPage = () => {
 
   const handleAddChannel = async (event) => {
     const newChannel = { name: filter.clean(event.channelName) };
-    const { data: createdChannel } = await addChannel(newChannel);
-    dispatch(setCurrentChannel(createdChannel));
-    setShowModal(false);
+    try {
+      const { data: createdChannel } = await addChannel(newChannel);
+      dispatch(setCurrentChannel(createdChannel));
+      toast.success(t('modalWindows.addChannel.toastAddName'));
+      setShowModal(false);
+    } catch (error) {
+      toast.error(t('modalWindows.addChannel.toastErrorAddName'));
+    }
   };
-
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [selectedClickChannel, setSelectedClickChannel] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -137,8 +142,8 @@ const MainPage = () => {
         const { data: updatedMessages } = await refetch();
         const channelMessages = updatedMessages.filter(message => message.channelId === defaultChannel.id);
         dispatch(addMessage(channelMessages));
-
       }
+      toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
       setShowDeleteModal(false);
     };
   
@@ -237,6 +242,7 @@ const MainPage = () => {
         </div>
       </div>
       <AddChannel show={showModal} setShowModal={setShowModal} handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
+    
     </div>
   );
 };

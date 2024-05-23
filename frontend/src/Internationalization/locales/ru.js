@@ -43,15 +43,19 @@ const ru = {
       addChannel: {
         addChannel: 'Добавить канал',
         channelName: 'Имя канала',
+        toastAddName: 'Канал создан!',
+        toastErrorAddName: 'Ошибка при создании канала!',
       },
       renameChannel: {
         renameChannel: 'Переименовать канал',
         newName: 'Новое имя канала',
+        toastRenameChannel: 'Канал переименован!',
       },
       deleteChannel: {
         deleteChannel: 'Удалить канал',
         confirmation: 'Уверены?',
-        delete: 'Удалить'
+        delete: 'Удалить',
+        toastDeleteChannel: 'Канал удален!',
       },
     },
     schema: {

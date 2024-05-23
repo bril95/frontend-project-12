@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { validationSchemaChat } from '../../Internationalization/validation'
 import { useSelector } from 'react-redux';
 import { selectChannels } from '../../Slice/channelsSlice';
+import { toast } from 'react-toastify';
 
 const RenameChannelModal = ({ show, handleClose, handleRename, initialValues }) => {
   const { t } = useTranslation();
@@ -12,6 +13,7 @@ const RenameChannelModal = ({ show, handleClose, handleRename, initialValues }) 
 
   const handleSubmit = (values) => {
     handleRename(values.channelName);
+    toast.success(t('modalWindows.renameChannel.toastRenameChannel'));
     handleClose();
   };
 

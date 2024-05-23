@@ -10,6 +10,8 @@ import SignUpPage from './Components/SignUpPage';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './Internationalization/i18n';
 import routes from './api/routes';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -22,6 +24,7 @@ const App = () => {
             <Route path={routes.pages.notFoundPage()} element={<NotFoundPage />} />
             <Route path={routes.pages.signUpPage()} element={<SignUpPage />} />
           </Routes>
+          <ToastContainer />
         </BrowserRouter>
       </I18nextProvider>
     </Provider>

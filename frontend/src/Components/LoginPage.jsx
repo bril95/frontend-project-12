@@ -37,6 +37,9 @@ const Login = () => {
         <Card className='shadow-sm'>
           <Card.Body className='p-5'>
             <div className='d-flex justify-content-center'>
+            <div>
+              <img src='/pictures/Login.jpeg' className='rounded-circle' alt='Войти' />
+            </div>
               <Formik
                 initialValues = {{ username: '', password: '' }}
                 validationSchema = {validationSchemaLoginPage(t)}
