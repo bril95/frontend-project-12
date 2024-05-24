@@ -65,7 +65,7 @@ const MainPage = () => {
         dispatch(setChannels(channels));
       }
     } catch (error) {
-      toast.error(t('chatMainPage.toastDataLoadingError'));
+      toast.error(t('chatMainPage.toastError'));
       console.error(error);
     }
   }, [channels, dispatch, t]);
@@ -182,12 +182,12 @@ const MainPage = () => {
                   id={`dropdown-split-basic-${index}`}
                   style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
                 >
-                  <span className='visually-hidden'>Управление каналом</span>
+                  <span className='visually-hidden'>{t('modalWindows.channelManagment')}</span>
                 </Dropdown.Toggle>
       
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleDeleteChannel(channel)}>Удалить</Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleRenameChannel(channel)}>Переименовать</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleDeleteChannel(channel)}>{t('modalWindows.deleteChannel.delete')}</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleRenameChannel(channel)}>{t('modalWindows.renameChannel.rename')}</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             )}

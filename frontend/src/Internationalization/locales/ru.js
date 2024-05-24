@@ -13,8 +13,7 @@ const ru = {
       exit: 'Выйти',
       channels: 'Каналы',
       placeholderMessage: 'Введите сообщение...',
-      toastError: 'Ошибка сети',
-      toastDataLoadingError: 'Ошибка в загрузке данных',
+      toastError: 'Ошибка соединения',
       messages: {
         key_zero: '{{count}} сообщений',
         key_one: '{{count}} сообщение',
@@ -25,7 +24,7 @@ const ru = {
     signUpPage: {
       placeholder: {
         min3max20: 'От 3 до 20 символов',
-        min6: 'Минимум 6 символов',
+        min6: 'Не менее 6 символов',
         samePassword: 'Пароли должны совпадать',
       },
       errorPassword: 'Пользователь уже существует',
@@ -33,7 +32,7 @@ const ru = {
       registration: 'Регистрация',
       username: 'Имя пользователя',
       password: 'Пароль',
-      confirmPassword: 'Пароли должны совпадать',
+      confirmPassword: 'Подтвердите пароль',
       signUp: 'Зарегистрироваться'
     },
     notFoundPage: {
@@ -42,23 +41,25 @@ const ru = {
     modalWindows: {
       cancel: 'Отмена',
       submit: 'Отправить',
+      channelManagment: 'Управление каналом',
       addChannel: {
         addChannel: 'Добавить канал',
         channelName: 'Имя канала',
-        toastAddName: 'Канал создан!',
-        toastErrorAddName: 'Ошибка при создании канала!',
+        toastAddName: 'Канал создан',
+        toastErrorAddName: 'Ошибка при создании канала',
       },
       renameChannel: {
+        rename: 'Переименовать',
         renameChannel: 'Переименовать канал',
         newName: 'Новое имя канала',
-        toastRenameChannel: 'Канал переименован!',
+        toastRenameChannel: 'Канал переименован',
       },
       deleteChannel: {
         deleteChannel: 'Удалить канал',
         confirmation: 'Уверены?',
         delete: 'Удалить',
         toastDeleteChannel: 'Канал удален!',
-        toastErrorAddName: 'Ошибка при удалении канала!',
+        toastErrorAddName: 'Ошибка при удалении канала',
       },
     },
     schema: {
