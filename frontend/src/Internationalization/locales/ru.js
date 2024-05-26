@@ -51,7 +51,7 @@ const ru = {
       renameChannel: {
         rename: 'Переименовать',
         renameChannel: 'Переименовать канал',
-        newName: 'Новое имя канала',
+        newName: 'Имя канала',
         toastRenameChannel: 'Канал переименован',
       },
       deleteChannel: {

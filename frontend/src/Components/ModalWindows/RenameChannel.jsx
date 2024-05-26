@@ -30,11 +30,11 @@ const RenameChannelModal = ({ show, handleClose, handleRename, initialValues }) 
         >
           {({ handleSubmit, handleChange, values, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
-              <div className='mb-3'>
-                <label htmlFor='newName' className='form-label'>{t('modalWindows.renameChannel.newName')}</label>
+              <div>
+                <label htmlFor='name' className='visually-hidden'>{t('modalWindows.renameChannel.newName')}</label>
                 <input
                   type='text'
-                  className={`form-control ${errors.channelName && touched.channelName ? 'is-invalid' : ''}`}
+                  className={`mb-2 form-control ${errors.channelName && touched.channelName ? 'is-invalid' : ''}`}
                   id='channelName'
                   name='channelName'
                   value={values.channelName}
