@@ -133,7 +133,7 @@ const MainPage = () => {
     };
   
     const handleRename = (newName) => {
-      const editedChannel = { name: newName };
+      const editedChannel = { name: filter.clean(newName) };
       editChannel({ id: selectedClickChannel.id, nameChannel: editedChannel });
       const updatedChannel = { ...currentChannel, name: newName };
       dispatch(setCurrentChannel(updatedChannel));
