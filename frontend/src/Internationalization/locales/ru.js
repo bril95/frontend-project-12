@@ -27,7 +27,7 @@ const ru = {
         min6: 'Не менее 6 символов',
         samePassword: 'Пароли должны совпадать',
       },
-      errorPassword: 'Пользователь уже существует',
+      errorPassword: 'Такой пользователь уже существует',
       errorRegistration: 'Произошла ошибка при регистрации',
       registration: 'Регистрация',
       username: 'Имя пользователя',
