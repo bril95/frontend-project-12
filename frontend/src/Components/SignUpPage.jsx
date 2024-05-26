@@ -25,7 +25,7 @@ const SignUp = () => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const response = await addUser({ username: values.username, password: values.password });
-      if (response.error && response.error.response.status === 409) {
+      if (response.error && response.error.status === 409) {
         setError(t('signUpPage.errorPassword'));
       } else {
         resetForm();
