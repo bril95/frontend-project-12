@@ -5,13 +5,13 @@ import channelsReducer from '../Slice/channelsSlice.js';
 import currentAuthorReducer from '../Slice/currentAuthorSlice.js';
 import messagesSlice from '../Slice/messagesSlice.js';
 
-export const store = configureStore({
+export default configureStore({
   reducer: {
     auth: authReducer,
     [usersApi.reducerPath]: usersApi.reducer,
     channels: channelsReducer,
     currentAuthor: currentAuthorReducer,
-    messages: messagesSlice,    
+    messages: messagesSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(usersApi.middleware),

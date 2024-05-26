@@ -1,6 +1,6 @@
 const routes = {
   defaultApi: () => '/api/v1',
-  pages:{ 
+  pages: {
     loginPage: () => '/login',
     signUpPage: () => '/signup',
     chatMainPage: () => '/',

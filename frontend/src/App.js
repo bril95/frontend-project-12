@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import { store } from './api/createStore';
+import store from './api/createStore';
 import LoginPage from './Components/LoginPage';
 import NotFoundPage from './Components/NotFoundPage';
 import ChatMainPage from './Components/ChatMainPage';
@@ -20,23 +20,23 @@ const rollbarConfig = {
 };
 
 const App = () => (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <RollbarProvider config={rollbarConfig}>
-          <ErrorBoundary>
-            <BrowserRouter>
-              <Routes>
-                <Route path={routes.pages.loginPage()} element={<LoginPage />} />
-                <Route path={routes.pages.chatMainPage()} element={<ChatMainPage />} />
-                <Route path={routes.pages.notFoundPage()} element={<NotFoundPage />} />
-                <Route path={routes.pages.signUpPage()} element={<SignUpPage />} />
-              </Routes>
-            </BrowserRouter>
-          </ErrorBoundary>
-        </RollbarProvider>
-        <ToastContainer />
-      </I18nextProvider>
-    </Provider>
-  );
+  <Provider store={store}>
+    <I18nextProvider i18n={i18n}>
+      <RollbarProvider config={rollbarConfig}>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <Routes>
+              <Route path={routes.pages.loginPage()} element={<LoginPage />} />
+              <Route path={routes.pages.chatMainPage()} element={<ChatMainPage />} />
+              <Route path={routes.pages.notFoundPage()} element={<NotFoundPage />} />
+              <Route path={routes.pages.signUpPage()} element={<SignUpPage />} />
+            </Routes>
+          </BrowserRouter>
+        </ErrorBoundary>
+      </RollbarProvider>
+      <ToastContainer />
+    </I18nextProvider>
+  </Provider>
+);
 
 export default App;
