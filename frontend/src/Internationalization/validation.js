@@ -22,8 +22,8 @@ const validationSchemaChat = (t, channelsName) => Yup.object({
   channelName: Yup.string()
   .required(t('schema.requiredField'))
   .notOneOf(channelsName, t('schema.sameNameChannel'))
-  .min(3, t('schema.min3'))
-  .max(20, t('schema.max20')),
+  .min(3, t('schema.min3max20'))
+  .max(20, t('schema.min3max20')),
 });
 
 export { validationSignUpPage, validationSchemaLoginPage, validationSchemaChat};
