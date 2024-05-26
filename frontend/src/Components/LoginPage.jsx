@@ -49,6 +49,8 @@ const Login = () => {
                   <Form className='col-12 col-md-6'>
                     <h1 className='text-center mb-4'>{t('loginPage.enter')}</h1>
                     <div className='mb-3'>
+                    <label htmlFor='username' className='visually-hidden'>{t('loginPage.username')}</label>
+                    <div className='form-floating'>
                       <Field
                         type='text'
                         name='username'
@@ -56,20 +58,24 @@ const Login = () => {
                         className='form-control'
                         placeholder={t('loginPage.username')}
                       />
-                      <label htmlFor='username'>{t('loginPage.username')}</label>
-                      <ErrorMessage name='username' component='div' className='text-danger' />
+                      <label className='form-label' htmlFor='username'>{t('loginPage.username')}</label>
                     </div>
-                    <div className='mb-4'>
-                      <Field
-                        type='password'
-                        name='password'
-                        id='password'
-                        className='form-control'
-                        placeholder={t('loginPage.password')}
-                      />
-                      <label htmlFor='password'>{t('loginPage.password')}</label>
-                      <ErrorMessage name='password' component='div' className='text-danger' />
-                    </div>
+                    <ErrorMessage name='username' component='div' className='text-danger' />
+                  </div>
+                  <div className='mb-3'>
+                  <label htmlFor='password' className='visually-hidden'>{t('loginPage.password')}</label>
+                  <div className='form-floating'>
+                    <Field
+                      type='password'
+                      name='password'
+                      id='password'
+                      className='form-control'
+                      placeholder={t('loginPage.password')}
+                    />
+                    <label className='form-label' htmlFor='password'>{t('loginPage.password')}</label>
+                  </div>
+                  <ErrorMessage name='password' component='div' className='text-danger' />
+                </div>
                     <Button
                       type='submit'
                       className='w-100 mb-3'
