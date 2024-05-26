@@ -58,7 +58,7 @@ const ru = {
         deleteChannel: 'Удалить канал',
         confirmation: 'Уверены?',
         delete: 'Удалить',
-        toastDeleteChannel: 'Канал удален!',
+        toastDeleteChannel: 'Канал удален',
         toastErrorAddName: 'Ошибка при удалении канала',
       },
     },
