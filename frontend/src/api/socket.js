@@ -17,11 +17,11 @@ const handleSocketEvents = (dispatch, channelsStore, messagesStore) => {
 
   const handleRenameChannel = (channel) => {
     dispatch(renameChannel(channel));
-  }
+  };
 
   const handleRemoveChannel = ({ id }) => {
-    dispatch(deleteChannel(id))
-  }
+    dispatch(deleteChannel(id));
+  };
 
   socket.on('newMessage', handleMessage);
   socket.on('newChannel', handleNewChannel);

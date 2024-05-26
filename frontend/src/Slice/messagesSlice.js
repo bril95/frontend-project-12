@@ -9,6 +9,7 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage(state, { payload }) {
+      /* eslint-disable-next-line no-param-reassign */
       state.messages = payload;
     },
   },

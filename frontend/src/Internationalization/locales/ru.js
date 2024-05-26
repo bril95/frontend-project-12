@@ -4,7 +4,7 @@ const ru = {
       enter: 'Войти',
       username: 'Ваш ник',
       password: 'Пароль',
-      withoutAccount: 'Нет аккаунта?', 
+      withoutAccount: 'Нет аккаунта?',
       registration: 'Регистрация',
       error: 'Неверные имя пользователя или пароль',
       isLoading: 'В процессе...',
@@ -19,7 +19,7 @@ const ru = {
         key_one: '{{count}} сообщение',
         key_few: '{{count}} сообщения',
         key_many: '{{count}} сообщений',
-      }
+      },
     },
     signUpPage: {
       placeholder: {
@@ -33,10 +33,10 @@ const ru = {
       username: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
-      signUp: 'Зарегистрироваться'
+      signUp: 'Зарегистрироваться',
     },
     notFoundPage: {
-      pageNotFound: 'Страница не найдена'
+      pageNotFound: 'Страница не найдена',
     },
     modalWindows: {
       cancel: 'Отмена',
@@ -69,7 +69,7 @@ const ru = {
       samePassword: 'Пароли должны совпадать',
       sameNameChannel: 'Это имя канала уже используется',
       enterNewName: 'Введите новое имя канала',
-    }
+    },
   },
 };
 

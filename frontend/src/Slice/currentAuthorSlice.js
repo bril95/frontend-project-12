@@ -9,11 +9,12 @@ const currentAuthorSlice = createSlice({
   initialState,
   reducers: {
     setCurrentAuthor(state, { payload }) {
+    /* eslint-disable-next-line no-param-reassign */
       state.author = payload;
     },
   },
 });
 
 export const { setCurrentAuthor } = currentAuthorSlice.actions;
-export default currentAuthorSlice.reducer;
 export const selectCurrentAuthor = (state) => state.currentAuthor.author;
+export default currentAuthorSlice.reducer;

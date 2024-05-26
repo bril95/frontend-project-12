@@ -6,7 +6,7 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: routes.defaultApi(),
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
+      const { auth: { token } } = getState();
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -72,5 +72,5 @@ export const {
   useGetMessagesQuery,
   useAddMessagesMutation,
   useEditChannelMutation,
-  useRemoveChannelMutation
+  useRemoveChannelMutation,
 } = usersApi;
