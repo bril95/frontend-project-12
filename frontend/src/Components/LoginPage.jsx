@@ -38,7 +38,7 @@ const Login = () => {
           <Card.Body className='p-5'>
             <div className='d-flex justify-content-center'>
             <div>
-              <img src='/pictures/Login.jpeg' className='rounded-circle' alt='Войти' />
+              <img src='/pictures/Login.jpeg' className='rounded-circle' alt={t('loginPage.enter')} />
             </div>
               <Formik
                 initialValues = {{ username: '', password: '' }}
@@ -54,7 +54,7 @@ const Login = () => {
                         name='username'
                         id='username'
                         className='form-control'
-                        placeholder={t('loginPage.nickname')}
+                        placeholder={t('loginPage.username')}
                       />
                       <ErrorMessage name='username' component='div' className='text-danger' />
                     </div>

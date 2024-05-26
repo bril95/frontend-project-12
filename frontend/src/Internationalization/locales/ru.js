@@ -2,7 +2,7 @@ const ru = {
   translation: {
     loginPage: {
       enter: 'Войти',
-      nickname: 'Ваш ник',
+      username: 'Ваш ник',
       password: 'Пароль',
       withoutAccount: 'Нет аккаунта?', 
       registration: 'Регистрация',
