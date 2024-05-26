@@ -184,7 +184,6 @@ const MainPage = () => {
                 >
                   <span className='visually-hidden'>{t('modalWindows.channelManagment')}</span>
                 </Dropdown.Toggle>
-      
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => handleDeleteChannel(channel)}>{t('modalWindows.deleteChannel.delete')}</Dropdown.Item>
                   <Dropdown.Item onClick={() => handleRenameChannel(channel)}>{t('modalWindows.renameChannel.rename')}</Dropdown.Item>
@@ -257,7 +256,6 @@ const MainPage = () => {
         </div>
       </div>
       <AddChannel show={showModal} setShowModal={setShowModal} handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
-    
     </div>
   );
 };

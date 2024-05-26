@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +20,7 @@ const MessageForm = ({ currentChannel }) => {
       await addMessages(newMessage);
       setTextMessage('');
     } catch (error) {
-      console.error('Error adding message:', error);
+      console.error(error);
     }
   };
 
@@ -38,6 +38,7 @@ const MessageForm = ({ currentChannel }) => {
           value={textMessage}
           onChange={handleChange}
           className='border-0 p-0 ps-2'
+          autoFocus
           required
         />
         <Button variant='primary' type='submit'>

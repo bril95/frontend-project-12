@@ -1,14 +1,23 @@
-const MessageList = ({ messages, currentChannel }) => {
+import { useEffect, useRef } from 'react';
+
+const MessageList = ({ messages }) => {
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   return (
-    <>
-      {messages.length > 0 && messages.map((message, index) => (
-        message.channelId === currentChannel.id && (
-          <div key={index} className='text-break mb-2'>
+    <div style={{ height: '400px', overflowY: 'auto' }}>
+      {messages.map((message, index) => (
+        <div key={index} className='text-break mb-2'>
             <b>{message.username}</b>: {message.body} <br />
           </div>
-        )
       ))}
-    </>
+    <div ref={messagesEndRef} />
+    </div>
   );
 };
 

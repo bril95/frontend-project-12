@@ -32,6 +32,7 @@ function AddChannel({ show, handleSubmitModal, handleClose }) {
                   name='channelName'
                   value={values.channelName}
                   onChange={handleChange}
+                  autoFocus
                 />
                 <ErrorMessage name='channelName' component='div' className='invalid-feedback' />
               </div >
