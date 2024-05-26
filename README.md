@@ -1,5 +1,9 @@
 # Analogue of "Slack"
 
+<code style="font-family: Courier New;">
+Diploma Project - real-time web application built with React/Redux utilizing AJAX, REST, and websockets. Includes authentication components, forms using Formik, and client-side routing. UI is designed using react-bootstrap. Build and deployment are handled via webpack, with error monitoring in production provided by Rollbar.
+</code>
+
 [Link to the project](https://frontend-project-12-lpz4.onrender.com/)
 
 ### Hexlet tests and linter status:
