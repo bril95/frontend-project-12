@@ -30,7 +30,7 @@ const MainPage = () => {
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
-  filter.loadDictionary('ru');
+  filter.add(filter.getDictionary('ru'))
   const defaultChannel = channelsStore.find((channel) => channel.name === 'general')
   
   useEffect(() => {
