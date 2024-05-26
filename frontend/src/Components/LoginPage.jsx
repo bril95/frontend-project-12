@@ -48,24 +48,19 @@ const Login = () => {
                 {({ isSubmitting }) => (
                   <Form className='col-12 col-md-6'>
                     <h1 className='text-center mb-4'>{t('loginPage.enter')}</h1>
-                    <div className='mb-3'>
-                    <label htmlFor='username' className='visually-hidden'>{t('loginPage.username')}</label>
-                    <div className='form-floating'>
-                      <Field
-                        type='text'
-                        name='username'
-                        id='username'
-                        className='form-control'
-                        placeholder={t('loginPage.username')}
-                      />
-                      <label className='form-label' htmlFor='username'>{t('loginPage.username')}</label>
-                    </div>
-                    <ErrorMessage name='username' component='div' className='text-danger' />
-                  </div>
-                  <div className='mb-3'>
-                  <label htmlFor='password' className='visually-hidden'>{t('loginPage.password')}</label>
-                  <div className='form-floating'>
+                    <div className='form-floating mb-3'>
                     <Field
+                          type='text'
+                          name='username'
+                          id='username'
+                          className='form-control'
+                          placeholder={t('loginPage.username')}
+                        />
+                        <label htmlFor='username'>{t('loginPage.username')}</label>
+                      <ErrorMessage name='username' component='div' className='text-danger' />
+                  </div>
+                  <div className='form-floating mb-3'>
+                  <Field
                       type='password'
                       name='password'
                       id='password'
@@ -73,9 +68,8 @@ const Login = () => {
                       placeholder={t('loginPage.password')}
                     />
                     <label className='form-label' htmlFor='password'>{t('loginPage.password')}</label>
-                  </div>
                   <ErrorMessage name='password' component='div' className='text-danger' />
-                </div>
+                  </div>
                     <Button
                       type='submit'
                       className='w-100 mb-3'
