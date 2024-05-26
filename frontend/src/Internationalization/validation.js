@@ -3,8 +3,8 @@ import * as Yup from 'yup';
 const validationSignUpPage = (t) => Yup.object({
   username: Yup.string()
     .required(t('schema.requiredField'))
-    .min(3, t('schema.min3'))
-    .max(20, t('schema.max20')),
+    .min(3, t('schema.min3max20'))
+    .max(20, t('schema.min3max20')),
   password: Yup.string()
     .required(t('schema.requiredField'))
     .min(6, t('schema.min6')),
