@@ -78,7 +78,9 @@ const MainPage = () => {
 
   useEffect(() => {
     if (allMessages && currentChannel) {
-      const channelMessages = allMessages.filter((message) => message.channelId === currentChannel.id);
+      const channelMessages = allMessages.filter(
+        (message) => message.channelId === currentChannel.id
+      );
       dispatch(addMessage(channelMessages));
     }
   }, [allMessages, currentChannel, dispatch]);
@@ -157,7 +159,9 @@ const MainPage = () => {
         if (currentChannel && currentChannel.id === selectedClickChannel.id) {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
-          const channelMessages = updatedMessages.filter((message) => message.channelId === defaultChannel.id);
+          const channelMessages = updatedMessages.filter(
+            (message) => message.channelId === defaultChannel.id
+          );
           dispatch(addMessage(channelMessages));
         }
         toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
@@ -165,7 +169,7 @@ const MainPage = () => {
       } catch (error) {
         toast.error(t('modalWindows.deleteChannel.toastErrorAddName'));
         console.error(error);
-        }
+      }
     };
 
     return (
@@ -232,8 +236,8 @@ const MainPage = () => {
                     <b>{t('chatMainPage.channels')}</b>
                     <Button variant="primary" onClick={handleShowModal}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"></path>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                       </svg>
                       <span className="visually-hidden">{t('chatMainPage.plus')}</span>
                     </Button>
@@ -247,10 +251,9 @@ const MainPage = () => {
                     <div className="bg-light mb-4 p-3 shadow-sm small">
                       <p className="m-0">
                         <b>
-                        #
-                        {currentChannel ? currentChannel.name : ''}
+                          # {currentChannel ? currentChannel.name : ''}
                         </b>
-                        </p>
+                      </p>
                       <span className="text-muted">{t('chatMainPage.messages.key', { count: messagesStore.length })}</span>
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -266,10 +269,11 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <AddChannel show={showModal}
-      setShowModal={setShowModal}
-      handleSubmitModal={handleAddChannel}
-      handleClose={handleCloseModal}
+      <AddChannel 
+        show={showModal}
+        setShowModal={setShowModal}
+        handleSubmitModal={handleAddChannel}
+        handleClose={handleCloseModal}
       />
     </div>
   );

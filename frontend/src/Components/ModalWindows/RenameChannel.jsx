@@ -33,7 +33,7 @@ const RenameChannelModal = ({
         >
           {({
             handleSubmit, handleChange,
-            values, errors, touched
+            values, errors, touched,
           }) => (
             <Form onSubmit={handleSubmit}>
               <div>
