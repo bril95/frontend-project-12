@@ -47,7 +47,7 @@ const Login = () => {
                 <img src="/pictures/Login.jpeg" className="rounded-circle" alt={t('loginPage.enter')} />
               </div>
               <Formik
-                initialValues={{ username: "", password: "" }}
+                initialValues={{ username: '', password: '' }}
                 validationSchema={validationSchemaLoginPage(t)}
                 onSubmit={handleSubmit}
               >
@@ -91,13 +91,14 @@ const Login = () => {
           </Card.Body>
           <Card.Footer className="p-4">
             <div className="text-center">
-              <span>{t('loginPage.withoutAccount')}</span> <a href="/signup">{t('loginPage.registration')}</a>
+              <span>{t('loginPage.withoutAccount')}</span>
+              <a href="/signup">{t('loginPage.registration')}</a>
             </div>
           </Card.Footer>
         </Card>
       </Container>
     </div>
-  );  
+  );
 };
 
 export default Login;

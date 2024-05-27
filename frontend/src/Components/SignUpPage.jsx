@@ -1,5 +1,11 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Container, Navbar, Card, Button } from 'react-bootstrap';
+import {
+  Formik, Form,
+  Field, ErrorMessage,
+} from 'formik';
+import {
+  Container, Navbar,
+  Card, Button,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -112,7 +118,7 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default SignUp;

@@ -35,10 +35,9 @@ const AddChannel = ({ show, handleSubmitModal, handleClose }) => {
                   name="channelName"
                   value={values.channelName}
                   onChange={handleChange}
-                  autoFocus
                 />
                 <ErrorMessage name="channelName" component="div" className="invalid-feedback" />
-              </div >
+              </div>
               <div className="d-flex justify-content-between">
                 <Button variant="secondary" onClick={handleClose}>{t('modalWindows.cancel')}</Button>
                 <Button variant="primary" type="submit">{t('modalWindows.submit')}</Button>
@@ -48,7 +47,7 @@ const AddChannel = ({ show, handleSubmitModal, handleClose }) => {
         </Formik>
       </Modal.Body>
     </Modal>
-  );  
+  );
 };
 
 export default AddChannel;

@@ -28,13 +28,6 @@ const channelsSlice = createSlice({
       state.channels.splice(index, 1);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(deleteChannel, (state, { payload }) => {
-        /* eslint-disable-next-line no-param-reassign */
-        state.messages = state.messages.filter(message => message.channelId !== payload.id);
-      });
-  },
 });
 
 export const {

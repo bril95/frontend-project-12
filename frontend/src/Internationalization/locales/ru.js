@@ -14,6 +14,7 @@ const ru = {
       channels: 'Каналы',
       placeholderMessage: 'Введите сообщение...',
       toastError: 'Ошибка соединения',
+      plus: '+',
       messages: {
         key_zero: '{{count}} сообщений',
         key_one: '{{count}} сообщение',

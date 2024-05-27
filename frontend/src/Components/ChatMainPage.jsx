@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { 
+import {
   Button, Container, Row, Col,
-  Navbar, Nav,Dropdown,
+  Navbar, Nav, Dropdown,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -16,15 +19,12 @@ import {
 } from '../Slice/channelsSlice';
 import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
 import AddChannel from './ModalWindows/AddChannel';
-import { useTranslation } from 'react-i18next';
-import filter from 'leo-profanity';
 import handleSocketEvents from '../api/socket';
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
 import RenameChannelModal from './ModalWindows/RenameChannel';
 import DeleteChannelModal from './ModalWindows/RemoveChannel';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
-import { toast } from 'react-toastify';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -78,7 +78,9 @@ const MainPage = () => {
 
   useEffect(() => {
     if (allMessages && currentChannel) {
-      const channelMessages = allMessages.filter((message) => message.channelId === currentChannel.id);
+      const channelMessages = allMessages.filter((message) => 
+        message.channelId === currentChannel.id
+      );
       dispatch(addMessage(channelMessages));
     }
   }, [allMessages, currentChannel, dispatch]);
@@ -157,7 +159,9 @@ const MainPage = () => {
         if (currentChannel && currentChannel.id === selectedClickChannel.id) {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
-          const channelMessages = updatedMessages.filter((message) => message.channelId === defaultChannel.id);
+          const channelMessages = updatedMessages.filter((message) => 
+            message.channelId === defaultChannel.id
+        );
           dispatch(addMessage(channelMessages));
         }
         toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
@@ -170,14 +174,15 @@ const MainPage = () => {
 
     return (
       <>
-        {channelsStore && channelsStore.length > 0 && channelsStore.map((channel, index) => (
-          <div key={index} className='d-flex dropdown btn-group'>
+        {channelsStore && channelsStore.length > 0 && channelsStore.map((channel) => (
+          <div key={channel.id} className="d-flex dropdown btn-group">
             <button
               type="button"
               className={`w-100 rounded-0 text-start text-truncate btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
               onClick={() => handleChangeChannel(channel)}
             >
-              <span className='me-1'>#</span>{channel.name}
+              <span className="me-1">#</span>
+              {channel.name}
             </button>
             {channel.removable && (
               <Dropdown>
@@ -185,7 +190,7 @@ const MainPage = () => {
                   split
                   variant=""
                   className={`dropdown-toggle-split btn ${currentChannel && currentChannel.id === channel.id ? 'btn-secondary' : ''}`}
-                  id={`dropdown-split-basic-${index}`}
+                  id={`dropdown-split-basic-${channel.id}`}
                   style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
                 >
                   <span className="visually-hidden">{t('modalWindows.channelManagment')}</span>
@@ -234,7 +239,7 @@ const MainPage = () => {
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"></path>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
                       </svg>
-                      <span className="visually-hidden">+</span>
+                      <span className="visually-hidden">{t('chatMainPage.plus')}</span>
                     </Button>
                   </div>
                   <Nav className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block" id="channels-box">
@@ -244,7 +249,10 @@ const MainPage = () => {
                 <Col className="p-0 h-100">
                   <div className="d-flex flex-column h-100">
                     <div className="bg-light mb-4 p-3 shadow-sm small">
-                      <p className="m-0"><b># {currentChannel ? currentChannel.name : ""}</b></p>
+                      <p className="m-0"><b>
+                        #
+                        {currentChannel ? currentChannel.name : ''}
+                        </b></p>
                       <span className="text-muted">{t('chatMainPage.messages.key', { count: messagesStore.length })}</span>
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -260,9 +268,10 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <AddChannel show={showModal} setShowModal={setShowModal} handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
+      <AddChannel show={showModal} setShowModal={setShowModal}
+      handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
     </div>
-  );  
+  );
 };
 
 export default MainPage;
