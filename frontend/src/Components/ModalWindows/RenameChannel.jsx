@@ -1,15 +1,18 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { validationSchemaChat } from '../../Internationalization/validation'
 import { useSelector } from 'react-redux';
-import { selectChannels } from '../../Slice/channelsSlice';
 import { toast } from 'react-toastify';
+import { validationSchemaChat } from '../../Internationalization/validation'
+import { selectChannels } from '../../Slice/channelsSlice';
 
-const RenameChannelModal = ({ show, handleClose, handleRename, initialValues }) => {
+const RenameChannelModal = ({
+  show, handleClose,
+  handleRename, initialValues,
+}) => {
   const { t } = useTranslation();
   const channelsStore = useSelector(selectChannels);
-  const channelsName = channelsStore.map(channels => channels.name);
+  const channelsName = channelsStore.map((channels) => channels.name);
 
   const handleSubmit = (values) => {
     handleRename(values.channelName);

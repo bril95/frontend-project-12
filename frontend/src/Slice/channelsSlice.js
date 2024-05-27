@@ -31,8 +31,9 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(deleteChannel, (state, { payload }) => {
+        /* eslint-disable-next-line no-param-reassign */
         state.messages = state.messages.filter(message => message.channelId !== payload.id);
-      })
+      });
   },
 });
 
@@ -40,7 +41,7 @@ export const {
   setChannels,
   setCurrentChannel,
   renameChannel,
-  deleteChannel
+  deleteChannel,
 } = channelsSlice.actions;
 export const channelsReducer = channelsSlice.reducer;
 export default channelsSlice.reducer;

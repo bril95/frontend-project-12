@@ -4,7 +4,6 @@ const NotFound = () => {
   const { t } = useTranslation();
 
   return <h3>{t('notFoundPage.pageNotFound')}</h3>;
-
 };
 
 export default NotFound;

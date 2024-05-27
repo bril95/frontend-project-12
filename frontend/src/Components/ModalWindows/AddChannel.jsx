@@ -1,14 +1,14 @@
-import { Modal, Button, Form, } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { validationSchemaChat } from '../../Internationalization/validation'
 import { useSelector } from 'react-redux';
-import { selectChannels} from '../../Slice/channelsSlice';
+import { validationSchemaChat } from '../../Internationalization/validation';
+import { selectChannels } from '../../Slice/channelsSlice';
 
-function AddChannel({ show, handleSubmitModal, handleClose }) {
+const AddChannel = ({ show, handleSubmitModal, handleClose }) => {
   const { t } = useTranslation();
   const channelsStore = useSelector(selectChannels);
-  const channelsName = channelsStore.map(channels => channels.name)
+  const channelsName = channelsStore.map((channels) => channels.name);
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -21,31 +21,34 @@ function AddChannel({ show, handleSubmitModal, handleClose }) {
           validationSchema={validationSchemaChat(t, channelsName)}
           onSubmit={handleSubmitModal}
         >
-          {({ handleSubmit, handleChange, values, errors, touched }) => (
+          {({
+            handleSubmit, handleChange,
+            values, errors, touched,
+          }) => (
             <Form onSubmit={handleSubmit}>
-              <div className='mb-3'>
-                <label htmlFor='channelName' className='form-label'>{t('modalWindows.addChannel.channelName')}</label>
+              <div className="mb-3">
+                <label htmlFor="channelName" className="form-label">{t('modalWindows.addChannel.channelName')}</label>
                 <input
-                  type='text'
+                  type="text"
                   className={`form-control ${errors.channelName && touched.channelName ? 'is-invalid' : ''}`}
-                  id='channelName'
-                  name='channelName'
+                  id="channelName"
+                  name="channelName"
                   value={values.channelName}
                   onChange={handleChange}
                   autoFocus
                 />
-                <ErrorMessage name='channelName' component='div' className='invalid-feedback' />
+                <ErrorMessage name="channelName" component="div" className="invalid-feedback" />
               </div >
-              <div className='d-flex justify-content-between'>
-              <Button variant='secondary' onClick={handleClose}>{t('modalWindows.cancel')}</Button>
-              <Button variant='primary' type='submit'>{t('modalWindows.submit')}</Button>
+              <div className="d-flex justify-content-between">
+                <Button variant="secondary" onClick={handleClose}>{t('modalWindows.cancel')}</Button>
+                <Button variant="primary" type="submit">{t('modalWindows.submit')}</Button>
               </div>
             </Form>
           )}
         </Formik>
       </Modal.Body>
     </Modal>
-  );
+  );  
 };
 
 export default AddChannel;

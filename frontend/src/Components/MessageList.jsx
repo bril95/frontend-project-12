@@ -10,13 +10,16 @@ const MessageList = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div style={{ height: '400px', overflowY: 'auto' }}>
+    <div style={{ height: "400px", overflowY: "auto" }}>
       {messages.map((message, index) => (
-        <div key={index} className='text-break mb-2'>
-            <b>{message.username}</b>: {message.body} <br />
-          </div>
+        <div key={index} className="text-break mb-2">
+          <b>{message.username}</b>
+          :
+          {message.body}
+          <br />
+        </div>
       ))}
-    <div ref={messagesEndRef} />
+      <div ref={messagesEndRef} />
     </div>
   );
 };
