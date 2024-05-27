@@ -78,9 +78,7 @@ const MainPage = () => {
 
   useEffect(() => {
     if (allMessages && currentChannel) {
-      const channelMessages = allMessages.filter((message) => 
-        message.channelId === currentChannel.id
-      );
+      const channelMessages = allMessages.filter((message) => message.channelId === currentChannel.id);
       dispatch(addMessage(channelMessages));
     }
   }, [allMessages, currentChannel, dispatch]);
@@ -159,9 +157,7 @@ const MainPage = () => {
         if (currentChannel && currentChannel.id === selectedClickChannel.id) {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
-          const channelMessages = updatedMessages.filter((message) => 
-            message.channelId === defaultChannel.id
-        );
+          const channelMessages = updatedMessages.filter((message) => message.channelId === defaultChannel.id);
           dispatch(addMessage(channelMessages));
         }
         toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
@@ -169,7 +165,7 @@ const MainPage = () => {
       } catch (error) {
         toast.error(t('modalWindows.deleteChannel.toastErrorAddName'));
         console.error(error);
-      }
+        }
     };
 
     return (
@@ -249,10 +245,12 @@ const MainPage = () => {
                 <Col className="p-0 h-100">
                   <div className="d-flex flex-column h-100">
                     <div className="bg-light mb-4 p-3 shadow-sm small">
-                      <p className="m-0"><b>
+                      <p className="m-0">
+                        <b>
                         #
                         {currentChannel ? currentChannel.name : ''}
-                        </b></p>
+                        </b>
+                        </p>
                       <span className="text-muted">{t('chatMainPage.messages.key', { count: messagesStore.length })}</span>
                     </div>
                     <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -268,8 +266,11 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <AddChannel show={showModal} setShowModal={setShowModal}
-      handleSubmitModal={handleAddChannel} handleClose={handleCloseModal} />
+      <AddChannel show={showModal}
+      setShowModal={setShowModal}
+      handleSubmitModal={handleAddChannel}
+      handleClose={handleCloseModal}
+      />
     </div>
   );
 };
