@@ -92,6 +92,7 @@ const Login = () => {
           <Card.Footer className="p-4">
             <div className="text-center">
               <span>{t('loginPage.withoutAccount')}</span>
+              <span> </span>
               <a href="/signup">{t('loginPage.registration')}</a>
             </div>
           </Card.Footer>

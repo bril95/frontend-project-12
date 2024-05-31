@@ -14,13 +14,13 @@ const init = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-    <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    </RollbarProvider>
-  </I18nextProvider>
-  )
+      <RollbarProvider config={rollbarConfig}>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </RollbarProvider>
+    </I18nextProvider>
+  );
 };
 
 export default init;
