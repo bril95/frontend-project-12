@@ -15,8 +15,8 @@ import routes from './api/routes';
 import 'react-toastify/dist/ReactToastify.css';
 
 const rollbarConfig = {
-  accessToken: 'a29abbb6aa3a4fde90c839d9a64dad50',
-  environment: 'testenv',
+  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
+  environment: 'production',
 };
 
 const App = () => (
