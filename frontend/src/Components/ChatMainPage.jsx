@@ -62,14 +62,14 @@ const MainPage = () => {
   useEffect(() => {
     try {
       if (channels) {
-        dispatch(setCurrentChannel(channels[0]));
+        dispatch(setCurrentChannel(defaultChannel));
         dispatch(setChannels(channels));
       }
     } catch (error) {
       toast.error(t('chatMainPage.toastError'));
       console.error(error);
     }
-  }, [channels, dispatch, t]);
+  }, [channels, dispatch, t, defaultChannel]);
 
   useEffect(() => {
     if (allMessages && currentChannel) {

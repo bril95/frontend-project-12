@@ -62,7 +62,7 @@ const SignUp = () => {
               <Card className="shadow-sm">
                 <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
                   <div>
-                    <img src="/pictures//Registration.jpg" className="rounded-circle" alt="Регистрация" />
+                    <img src="/pictures//Registration.jpg" className="rounded-circle" alt={t('signUpPage.registration')} />
                   </div>
                   <Formik
                     initialValues={initialValues}
