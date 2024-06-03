@@ -7,7 +7,7 @@ import { selectCurrentUsername } from '../Slice/usernameSlice';
 import { useAddMessagesMutation } from '../api/usersApi';
 
 const MessageForm = ({ currentChannel }) => {
-  const username = useSelector(selectCurrentUsername);
+  const username = useSelector(selectCurrentUsername) || localStorage.getItem('username');
   const [textMessage, setTextMessage] = useState('');
   const [addMessages] = useAddMessagesMutation();
   const { t } = useTranslation();

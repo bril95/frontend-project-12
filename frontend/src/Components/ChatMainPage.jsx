@@ -12,7 +12,6 @@ import {
   useGetChannelsQuery, useAddChannelMutation,
   useGetMessagesQuery, useEditChannelMutation, useRemoveChannelMutation,
 } from '../api/usersApi';
-import { setAuthToken } from '../Slice/authSlice';
 import {
   setChannels, selectChannels,
   setCurrentChannel, selectCurrentChannel,
@@ -36,7 +35,7 @@ const MainPage = () => {
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
   const defaultChannel = channelsStore.find((channel) => channel.name === 'general');
-  const { logout } = useContext(AuthorizationContext);
+  const { login, logout } = useContext(AuthorizationContext);
 
   useEffect(() => {
     const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
@@ -47,14 +46,12 @@ const MainPage = () => {
   }, [dispatch, channelsStore, messagesStore]);
 
   useEffect(() => {
-    if (token !== null) {
-      dispatch(setAuthToken(token));
-    }
-
     if (token === null) {
       navigate('/login');
+    } else {
+      login(token);
     }
-  }, [token, dispatch, navigate]);
+  }, [token, login, navigate]);
 
   const { data: channels } = useGetChannelsQuery();
   const [addChannel] = useAddChannelMutation();

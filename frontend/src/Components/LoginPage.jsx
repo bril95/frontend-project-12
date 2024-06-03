@@ -25,7 +25,8 @@ const Login = () => {
       const response = await loginUser(values);
       const userToken = response.data.token;
       login(userToken);
-      dispatch(setCurrentUsername(response.data.username));
+      dispatch(setCurrentUsername(values.username));
+      localStorage.setItem('username', values.username);
     } catch (error) {
       console.error(error);
     }

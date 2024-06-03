@@ -25,7 +25,7 @@ const AuthorizationProvider = ({ children }) => {
       dispatch(setIsAuthorized(true));
       navigate('/');
     },
-    [dispatch, navigate]
+    [dispatch, navigate],
   );
 
   const logout = useMemo(
@@ -35,7 +35,7 @@ const AuthorizationProvider = ({ children }) => {
       dispatch(setIsAuthorized(false));
       navigate('/login');
     },
-    [dispatch, navigate]
+    [dispatch, navigate],
   );
 
   const value = useMemo(() => ({ isAuthorized, login, logout }), [isAuthorized, login, logout]);

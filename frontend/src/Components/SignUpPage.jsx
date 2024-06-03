@@ -39,6 +39,7 @@ const SignUp = () => {
         const userToken = response.data.token;
         localStorage.setItem('token', userToken);
         dispatch(setCurrentUsername(values.username));
+        localStorage.setItem('username', values.username);
         navigate('/');
       }
     } catch (errorRegistration) {
