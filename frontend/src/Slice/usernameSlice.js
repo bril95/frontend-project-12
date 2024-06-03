@@ -1,0 +1,20 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  username: null,
+};
+
+const usernameSlice = createSlice({
+  name: 'username',
+  initialState,
+  reducers: {
+    setCurrentUsername(state, { payload }) {
+      /* eslint-disable-next-line no-param-reassign */
+      state.username = payload;
+    },
+  },
+});
+
+export const { setCurrentUsername } = usernameSlice.actions;
+export const selectCurrentUsername = (state) => state.username.username;
+export default usernameSlice.reducer;

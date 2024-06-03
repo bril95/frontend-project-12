@@ -3,19 +3,19 @@ import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
+import { selectCurrentUsername } from '../Slice/usernameSlice';
 import { useAddMessagesMutation } from '../api/usersApi';
 
 const MessageForm = ({ currentChannel }) => {
-  const author = useSelector(selectCurrentAuthor) || localStorage.getItem('author');
+  const username = useSelector(selectCurrentUsername);
   const [textMessage, setTextMessage] = useState('');
   const [addMessages] = useAddMessagesMutation();
-  const { t } = useTranslation();
+  const { t } = useTranslation(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const cleanedMessage = filter.clean(textMessage);
-    const newMessage = { body: cleanedMessage, channelId: currentChannel.id, username: author };
+    const newMessage = { body: cleanedMessage, channelId: currentChannel.id, username: username };
     try {
       await addMessages(newMessage);
       setTextMessage('');

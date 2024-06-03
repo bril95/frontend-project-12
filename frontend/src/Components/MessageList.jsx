@@ -15,6 +15,7 @@ const MessageList = ({ messages }) => {
         <div key={message.id} className="text-break mb-2">
           <b>{message.username}</b>
           :
+          {' '}
           {message.body}
           <br />
         </div>

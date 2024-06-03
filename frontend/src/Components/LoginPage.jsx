@@ -6,27 +6,26 @@ import {
   Container, Navbar,
   Card, Button,
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { validationSchemaLoginPage } from '../Internationalization/validation';
 import { useLoginUserMutation } from '../api/usersApi';
-import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
+import AuthorizationContext from '../Context/AuthorizationContext';
+import { setCurrentUsername } from '../Slice/usernameSlice';
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { login } = useContext(AuthorizationContext);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
     try {
       const response = await loginUser(values);
       const userToken = response.data.token;
-      localStorage.setItem('token', userToken);
-      dispatch(setCurrentAuthor(values.username));
-      localStorage.setItem('author', values.username);
-      navigate('/');
+      login(userToken)
+      dispatch(setCurrentUsername(response.data.username));
     } catch (error) {
       console.error(error);
     }

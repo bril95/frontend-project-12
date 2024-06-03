@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setCurrentAuthor } from '../Slice/currentAuthorSlice';
+import { setCurrentUsername } from '../Slice/usernameSlice';
 import { validationSignUpPage } from '../Internationalization/validation';
 import { useAddUserMutation } from '../api/usersApi';
 
@@ -38,7 +38,7 @@ const SignUp = () => {
         setSubmitting(false);
         const userToken = response.data.token;
         localStorage.setItem('token', userToken);
-        dispatch(setCurrentAuthor(values.username));
+        dispatch(setCurrentUsername(values.username));
         navigate('/');
       }
     } catch (errorRegistration) {

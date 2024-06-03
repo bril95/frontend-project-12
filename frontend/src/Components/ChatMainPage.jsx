@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
   Button, Container, Row, Col,
   Navbar, Nav, Dropdown,
@@ -9,7 +9,7 @@ import filter from 'leo-profanity';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-  useGetChannelsQuery, useAddMessagesMutation, useAddChannelMutation,
+  useGetChannelsQuery, useAddChannelMutation,
   useGetMessagesQuery, useEditChannelMutation, useRemoveChannelMutation,
 } from '../api/usersApi';
 import { setAuthToken } from '../Slice/authSlice';
@@ -17,7 +17,6 @@ import {
   setChannels, selectChannels,
   setCurrentChannel, selectCurrentChannel,
 } from '../Slice/channelsSlice';
-import { selectCurrentAuthor } from '../Slice/currentAuthorSlice';
 import AddChannel from './ModalWindows/AddChannel';
 import handleSocketEvents from '../api/socket';
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
@@ -25,6 +24,7 @@ import RenameChannelModal from './ModalWindows/RenameChannel';
 import DeleteChannelModal from './ModalWindows/RemoveChannel';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
+import AuthorizationContext from '../Context/AuthorizationContext';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -32,11 +32,11 @@ const MainPage = () => {
   const channelsStore = useSelector(selectChannels);
   const currentChannel = useSelector(selectCurrentChannel);
   const token = localStorage.getItem('token');
-  const author = useSelector(selectCurrentAuthor) || localStorage.getItem('author');
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
   const defaultChannel = channelsStore.find((channel) => channel.name === 'general');
+  const { logout } = useContext(AuthorizationContext);
 
   useEffect(() => {
     const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
@@ -57,7 +57,6 @@ const MainPage = () => {
   }, [token, dispatch, navigate]);
 
   const { data: channels } = useGetChannelsQuery();
-  const [addMessages] = useAddMessagesMutation();
   const [addChannel] = useAddChannelMutation();
   const { data: allMessages, refetch } = useGetMessagesQuery();
   const [editChannel] = useEditChannelMutation();
@@ -84,23 +83,8 @@ const MainPage = () => {
     }
   }, [allMessages, currentChannel, dispatch]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const formData = new FormData(event.target);
-      const textMessage = filter.clean(formData.get('body'));
-      const newMessage = { body: textMessage, channelId: currentChannel.id, username: author };
-      await addMessages(newMessage);
-      event.target.reset();
-    } catch (error) {
-      toast.error(t('chatMainPage.toastError'));
-      console.error(error);
-    }
-  };
-
   const handleExit = () => {
-    navigate('/login');
-    localStorage.clear();
+    logout();
   };
 
   const handleShowModal = () => {
@@ -259,7 +243,7 @@ const MainPage = () => {
                       <MessageList messages={messagesStore} currentChannel={currentChannel} />
                     </div>
                     <div className="mt-auto px-5 py-3">
-                      <MessageForm handleSubmit={handleSubmit} currentChannel={currentChannel} />
+                      <MessageForm currentChannel={currentChannel} />
                     </div>
                   </div>
                 </Col>
