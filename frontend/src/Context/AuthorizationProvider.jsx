@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthorizationContext from './AuthorizationContext';
 import { useDispatch, useSelector } from 'react-redux';
+import AuthorizationContext from './AuthorizationContext';
 import { setAuthToken, setIsAuthorized, selectIsAuthorized } from '../Slice/authSlice';
 
 const AuthorizationProvider = ({ children }) => {
@@ -16,24 +16,32 @@ const AuthorizationProvider = ({ children }) => {
     }
   }, [dispatch]);
 
-  const login = (token) => {
-    localStorage.setItem('token', token);
-    dispatch(setAuthToken(token));
-    dispatch(setIsAuthorized(true));
-    navigate('/');
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    dispatch(setAuthToken(null));
-    dispatch(setIsAuthorized(false));
-    navigate('/login');
-  };
-
   const isAuthorized = useSelector(selectIsAuthorized);
 
+  const login = useMemo(
+    () => (token) => {
+      localStorage.setItem('token', token);
+      dispatch(setAuthToken(token));
+      dispatch(setIsAuthorized(true));
+      navigate('/');
+    },
+    [dispatch, navigate]
+  );
+
+  const logout = useMemo(
+    () => () => {
+      localStorage.removeItem('token');
+      dispatch(setAuthToken(null));
+      dispatch(setIsAuthorized(false));
+      navigate('/login');
+    },
+    [dispatch, navigate]
+  );
+
+  const value = useMemo(() => ({ isAuthorized, login, logout }), [isAuthorized, login, logout]);
+
   return (
-    <AuthorizationContext.Provider value={{ isAuthorized, login, logout }}>
+    <AuthorizationContext.Provider value={value}>
       {children}
     </AuthorizationContext.Provider>
   );

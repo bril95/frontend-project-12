@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const response = await loginUser(values);
       const userToken = response.data.token;
-      login(userToken)
+      login(userToken);
       dispatch(setCurrentUsername(response.data.username));
     } catch (error) {
       console.error(error);

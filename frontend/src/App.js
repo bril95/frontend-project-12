@@ -9,7 +9,7 @@ import ChatMainPage from './Components/ChatMainPage';
 import SignUpPage from './Components/SignUpPage';
 import routes from './api/routes';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthorizationProvider from './Context/AuthorizationProvider'
+import AuthorizationProvider from './Context/AuthorizationProvider';
 
 const App = () => (
   <Provider store={store}>

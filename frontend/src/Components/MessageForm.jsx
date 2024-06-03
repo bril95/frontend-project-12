@@ -10,12 +10,12 @@ const MessageForm = ({ currentChannel }) => {
   const username = useSelector(selectCurrentUsername);
   const [textMessage, setTextMessage] = useState('');
   const [addMessages] = useAddMessagesMutation();
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const cleanedMessage = filter.clean(textMessage);
-    const newMessage = { body: cleanedMessage, channelId: currentChannel.id, username: username };
+    const newMessage = { body: cleanedMessage, channelId: currentChannel.id, username };
     try {
       await addMessages(newMessage);
       setTextMessage('');
