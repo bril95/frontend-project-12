@@ -205,7 +205,7 @@ const MainPage = () => {
           <div className="d-flex flex-column h-100">
             <Navbar bg="white" expand="lg" className="shadow-sm">
               <Container>
-                <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
+                <Navbar.Brand href="/">{t('headers.hexletChat')}</Navbar.Brand>
                 <Button variant="primary" onClick={handleExit}>{t('chatMainPage.exit')}</Button>
               </Container>
             </Navbar>

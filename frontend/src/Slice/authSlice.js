@@ -10,11 +10,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuthToken(state, { payload }) {
-      /* eslint-disable-next-line no-param-reassign */
       state.token = payload;
     },
     setIsAuthorized(state, { payload }) {
-      /* eslint-disable-next-line no-param-reassign */
       state.isAuthorized = payload;
     },
   },

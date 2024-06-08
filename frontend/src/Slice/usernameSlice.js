@@ -9,7 +9,6 @@ const usernameSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUsername(state, { payload }) {
-      /* eslint-disable-next-line no-param-reassign */
       state.username = payload;
     },
   },

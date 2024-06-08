@@ -1,5 +1,8 @@
 const ru = {
   translation: {
+    headers: {
+      hexletChat: 'Hexlet Chat',
+    },
     loginPage: {
       enter: 'Войти',
       username: 'Ваш ник',

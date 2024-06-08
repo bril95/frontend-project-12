@@ -10,14 +10,12 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage(state, { payload }) {
-      /* eslint-disable-next-line no-param-reassign */
       state.messages = payload;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(deleteChannel, (state, { payload }) => {
-        /* eslint-disable-next-line no-param-reassign */
         state.messages = state.messages.filter((message) => message.channelId !== payload.id);
       });
   },

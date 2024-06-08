@@ -36,7 +36,7 @@ const Login = () => {
     <div className="h-100 bg-light">
       <Navbar bg="light" expand="lg" className="shadow-sm">
         <Container>
-          <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
+          <Navbar.Brand href="/">{t('headers.hexletChat')}</Navbar.Brand>
         </Container>
       </Navbar>
       <Container fluid className="h-100 d-flex justify-content-center align-items-center">

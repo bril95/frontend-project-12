@@ -10,21 +10,17 @@ const channelsSlice = createSlice({
   initialState,
   reducers: {
     setChannels(state, { payload }) {
-      /* eslint-disable-next-line no-param-reassign */
       state.channels = payload;
     },
     setCurrentChannel(state, { payload }) {
-      /* eslint-disable-next-line no-param-reassign */
       state.currentChannel = payload;
     },
     renameChannel(state, { payload }) {
       const index = state.channels.findIndex((channel) => channel.id === payload.id);
-      /* eslint-disable-next-line no-param-reassign */
       state.channels[index].name = payload.name;
     },
     deleteChannel(state, { payload }) {
       const index = state.channels.findIndex((channel) => channel.id === payload.id);
-      /* eslint-disable-next-line no-param-reassign */
       state.channels.splice(index, 1);
     },
   },
