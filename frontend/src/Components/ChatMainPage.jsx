@@ -76,7 +76,7 @@ const MainPage = () => {
   useEffect(() => {
     if (allMessages && currentChannel) {
       const channelMessages = allMessages.filter(
-        (message) => message.channelId === currentChannel.id
+        (message) => message.channelId === currentChannel.id,
       );
       dispatch(addMessage(channelMessages));
     }
@@ -138,7 +138,7 @@ const MainPage = () => {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
           const channelMessages = updatedMessages.filter(
-            (message) => message.channelId === defaultChannel.id
+            (message) => message.channelId === defaultChannel.id,
           );
           dispatch(addMessage(channelMessages));
         }
