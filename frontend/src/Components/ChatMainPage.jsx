@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import {
-  Button, Container, Row, Col,
-  Navbar, Nav, Dropdown,
+  Button, Container, Row,
+  Nav, Dropdown, Col,
 } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -24,8 +24,10 @@ import DeleteChannelModal from './ModalWindows/RemoveChannel';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
 import AuthorizationContext from '../Context/AuthorizationContext';
+import { selectDefaultChannel } from '../Selectors/channelsSelectors';
+import HeadersPage from './HeadersPage';
 
-const MainPage = () => {
+function MainPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const channelsStore = useSelector(selectChannels);
@@ -34,8 +36,8 @@ const MainPage = () => {
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
-  const defaultChannel = channelsStore.find((channel) => channel.name === 'general');
-  const { login, logout } = useContext(AuthorizationContext);
+  const defaultChannel =  useSelector(selectDefaultChannel);
+  const { login } = useContext(AuthorizationContext);
 
   useEffect(() => {
     const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
@@ -74,15 +76,11 @@ const MainPage = () => {
   useEffect(() => {
     if (allMessages && currentChannel) {
       const channelMessages = allMessages.filter(
-        (message) => message.channelId === currentChannel.id,
+        (message) => message.channelId === currentChannel.id
       );
       dispatch(addMessage(channelMessages));
     }
   }, [allMessages, currentChannel, dispatch]);
-
-  const handleExit = () => {
-    logout();
-  };
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -140,7 +138,7 @@ const MainPage = () => {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
           const channelMessages = updatedMessages.filter(
-            (message) => message.channelId === defaultChannel.id,
+            (message) => message.channelId === defaultChannel.id
           );
           dispatch(addMessage(channelMessages));
         }
@@ -187,13 +185,11 @@ const MainPage = () => {
           show={showRenameModal}
           handleClose={() => setShowRenameModal(false)}
           handleRename={handleRename}
-          initialValues={{ name: selectedClickChannel ? selectedClickChannel.name : '' }}
-        />
+          initialValues={{ name: selectedClickChannel ? selectedClickChannel.name : '' }} />
         <DeleteChannelModal
           show={showDeleteModal}
           handleClose={() => setShowDeleteModal(false)}
-          handleDelete={handleDelete}
-        />
+          handleDelete={handleDelete} />
       </>
     );
   };
@@ -203,12 +199,9 @@ const MainPage = () => {
       <div className="h-100">
         <div className="h-100" id="chat">
           <div className="d-flex flex-column h-100">
-            <Navbar bg="white" expand="lg" className="shadow-sm">
-              <Container>
-                <Navbar.Brand href="/">{t('headers.hexletChat')}</Navbar.Brand>
-                <Button variant="primary" onClick={handleExit}>{t('chatMainPage.exit')}</Button>
-              </Container>
-            </Navbar>
+            <HeadersPage
+              showExitButton={false}
+            />
             <Container className="h-100 my-4 overflow-hidden rounded shadow">
               <Row className="h-100 bg-white flex-md-row">
                 <Col xs={4} md={2} className="border-end px-0 bg-light flex-column h-100 d-flex">
@@ -253,10 +246,9 @@ const MainPage = () => {
         show={showModal}
         setShowModal={setShowModal}
         handleSubmitModal={handleAddChannel}
-        handleClose={handleCloseModal}
-      />
+        handleClose={handleCloseModal} />
     </div>
   );
-};
+}
 
 export default MainPage;

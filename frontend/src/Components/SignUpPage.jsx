@@ -2,17 +2,15 @@ import {
   Formik, Form,
   Field, ErrorMessage,
 } from 'formik';
-import {
-  Container, Navbar,
-  Card, Button,
-} from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setCurrentUsername } from '../Slice/usernameSlice';
-import { validationSignUpPage } from '../Internationalization/validation';
+import { validationSignUpPage } from '../internationalization/validation';
 import { useAddUserMutation } from '../api/usersApi';
+import HeadersPage from './HeadersPage';
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
@@ -53,11 +51,9 @@ const SignUp = () => {
       <div className="h-100">
         <div className="h-100" id="chat">
           <div className="d-flex flex-column h-100">
-            <Navbar bg="light" expand="lg" className="shadow-sm">
-              <Container>
-                <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-              </Container>
-            </Navbar>
+            <HeadersPage
+              showExitButton={false}
+            />
             <Container fluid className="h-100 d-flex justify-content-center align-items-center">
               <Card className="shadow-sm">
                 <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">

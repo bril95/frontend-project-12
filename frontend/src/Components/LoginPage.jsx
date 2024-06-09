@@ -9,7 +9,7 @@ import {
 import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { validationSchemaLoginPage } from '../Internationalization/validation';
+import { validationSchemaLoginPage } from '../internationalization/validation';
 import { useLoginUserMutation } from '../api/usersApi';
 import AuthorizationContext from '../Context/AuthorizationContext';
 import { setCurrentUsername } from '../Slice/usernameSlice';

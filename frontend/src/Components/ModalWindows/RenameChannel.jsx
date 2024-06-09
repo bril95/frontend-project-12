@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { validationSchemaChat } from '../../Internationalization/validation';
+import { validationSchemaChat } from '../../internationalization/validation';
 import { selectChannels } from '../../Slice/channelsSlice';
 
 const RenameChannelModal = ({

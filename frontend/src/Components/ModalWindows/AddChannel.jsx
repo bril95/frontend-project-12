@@ -2,13 +2,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { validationSchemaChat } from '../../Internationalization/validation';
-import { selectChannels } from '../../Slice/channelsSlice';
+import { validationSchemaChat } from '../../internationalization/validation';
+import { selectChannelsName } from '../../Selectors/channelsSelectors';
 
 const AddChannel = ({ show, handleSubmitModal, handleClose }) => {
   const { t } = useTranslation();
-  const channelsStore = useSelector(selectChannels);
-  const channelsName = channelsStore.map((channels) => channels.name);
+  const channelsName = useSelector(selectChannelsName);
 
   return (
     <Modal show={show} onHide={handleClose} centered>
