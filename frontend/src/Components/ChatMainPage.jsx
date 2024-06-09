@@ -17,7 +17,6 @@ import {
   setCurrentChannel, selectCurrentChannel,
 } from '../Slice/channelsSlice';
 import AddChannel from './ModalWindows/AddChannel';
-import handleSocketEvents from '../api/socket';
 import { addMessage, selectMessages } from '../Slice/messagesSlice';
 import RenameChannelModal from './ModalWindows/RenameChannel';
 import DeleteChannelModal from './ModalWindows/RemoveChannel';
@@ -38,14 +37,6 @@ const MainPage = () => {
   const { t } = useTranslation();
   const defaultChannel = useSelector(selectDefaultChannel);
   const { login } = useContext(AuthorizationContext);
-
-  useEffect(() => {
-    const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
-
-    return () => {
-      subscribeSocket();
-    };
-  }, [dispatch, channelsStore, messagesStore]);
 
   useEffect(() => {
     if (token === null) {

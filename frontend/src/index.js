@@ -2,17 +2,36 @@ import ReactDOM from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import filter from 'leo-profanity';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Provider } from 'react-redux';
 import './index.css';
 import i18n from './internationalization/i18n';
 import App from './App';
+import handleSocketEvents from './api/socket';
+import { selectChannels } from './Slice/channelsSlice';
+import { selectMessages } from './Slice/messagesSlice';
+import store from './api/createStore';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
   environment: 'production',
 };
 
-const init = () => {
+const Init = () => {
   filter.add(filter.getDictionary('ru'));
+
+  const dispatch = useDispatch();
+  const channelsStore = useSelector(selectChannels);
+  const messagesStore = useSelector(selectMessages);
+
+  useEffect(() => {
+    const subscribeSocket = handleSocketEvents(dispatch, channelsStore, messagesStore);
+
+    return () => {
+      subscribeSocket();
+    };
+  }, [dispatch, channelsStore, messagesStore]);
 
   return (
     <I18nextProvider i18n={i18n}>
@@ -27,7 +46,11 @@ const init = () => {
 
 const app = () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(init());
+  root.render(    
+    <Provider store={store}>
+      <Init />
+    </Provider>
+  );
 };
 
 app();
