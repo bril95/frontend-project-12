@@ -33,6 +33,10 @@ rules:
   react/jsx-uses-react: off
   react/jsx-uses-vars: error
   no-param-reassign: off
+  max-len: 
+    - error
+    - code: 120
+  no-confusing-arrow: off
 
 settings:
   react:
