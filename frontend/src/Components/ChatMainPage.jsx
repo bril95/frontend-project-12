@@ -27,7 +27,7 @@ import AuthorizationContext from '../Context/AuthorizationContext';
 import { selectDefaultChannel } from '../Selectors/channelsSelectors';
 import HeadersPage from './HeadersPage';
 
-function MainPage() {
+const MainPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const channelsStore = useSelector(selectChannels);
@@ -36,7 +36,7 @@ function MainPage() {
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
-  const defaultChannel =  useSelector(selectDefaultChannel);
+  const defaultChannel = useSelector(selectDefaultChannel);
   const { login } = useContext(AuthorizationContext);
 
   useEffect(() => {
@@ -75,9 +75,7 @@ function MainPage() {
 
   useEffect(() => {
     if (allMessages && currentChannel) {
-      const channelMessages = allMessages.filter(
-        (message) => message.channelId === currentChannel.id
-      );
+      const channelMessages = allMessages.filter((message) => message.channelId === currentChannel.id);
       dispatch(addMessage(channelMessages));
     }
   }, [allMessages, currentChannel, dispatch]);
@@ -137,9 +135,7 @@ function MainPage() {
         if (currentChannel && currentChannel.id === selectedClickChannel.id) {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
-          const channelMessages = updatedMessages.filter(
-            (message) => message.channelId === defaultChannel.id
-          );
+          const channelMessages = updatedMessages.filter((message) => message.channelId === defaultChannel.id);
           dispatch(addMessage(channelMessages));
         }
         toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
@@ -185,11 +181,13 @@ function MainPage() {
           show={showRenameModal}
           handleClose={() => setShowRenameModal(false)}
           handleRename={handleRename}
-          initialValues={{ name: selectedClickChannel ? selectedClickChannel.name : '' }} />
+          initialValues={{ name: selectedClickChannel ? selectedClickChannel.name : '' }}
+        />
         <DeleteChannelModal
           show={showDeleteModal}
           handleClose={() => setShowDeleteModal(false)}
-          handleDelete={handleDelete} />
+          handleDelete={handleDelete}
+        />
       </>
     );
   };
@@ -246,9 +244,10 @@ function MainPage() {
         show={showModal}
         setShowModal={setShowModal}
         handleSubmitModal={handleAddChannel}
-        handleClose={handleCloseModal} />
+        handleClose={handleCloseModal}
+      />
     </div>
   );
-}
+};
 
 export default MainPage;

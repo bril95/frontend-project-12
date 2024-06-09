@@ -1,13 +1,13 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
 const channelsStore = (state) => state.channels.channels;
 
 export const selectDefaultChannel = createSelector(
   channelsStore,
-  (channelsStore) => channelsStore.find((channel) => channel.name === 'general')
+  (channels) => channels.find((channel) => channel.name === 'general')
 );
 
 export const selectChannelsName = createSelector(
   channelsStore,
-  (channelsStore) => channelsStore ? channelsStore.map((channel) => channel.name) : []
+  (channels) => channels ? channelsStore.map((channel) => channel.name) : []
 );
