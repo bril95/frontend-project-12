@@ -19,11 +19,8 @@ plugins:
   - react-hooks
 
 rules:
-  no-param-reassign: off
-  max-len: 
-    - error
-    - code: 120
-  no-confusing-arrow: off
+  no-param-reassign: ["error", { "props": false }]
+  no-confusing-arrow: ["error", {"allowParens": true}]
   indent:
     - error
     - 2

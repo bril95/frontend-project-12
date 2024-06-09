@@ -9,5 +9,5 @@ export const selectDefaultChannel = createSelector(
 
 export const selectChannelsName = createSelector(
   channelsStore,
-  (channels) => channels ? channels.map((channel) => channel.name) : [],
+  (channels) => (channels ? channels.map((channel) => channel.name) : []),
 );

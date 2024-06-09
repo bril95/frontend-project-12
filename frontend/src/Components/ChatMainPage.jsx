@@ -75,7 +75,9 @@ const MainPage = () => {
 
   useEffect(() => {
     if (allMessages && currentChannel) {
-      const channelMessages = allMessages.filter((message) => message.channelId === currentChannel.id);
+      const channelMessages = allMessages.filter(
+        (message) => message.channelId === currentChannel.id
+      );
       dispatch(addMessage(channelMessages));
     }
   }, [allMessages, currentChannel, dispatch]);
@@ -135,7 +137,9 @@ const MainPage = () => {
         if (currentChannel && currentChannel.id === selectedClickChannel.id) {
           dispatch(setCurrentChannel(defaultChannel));
           const { data: updatedMessages } = await refetch();
-          const channelMessages = updatedMessages.filter((message) => message.channelId === defaultChannel.id);
+          const channelMessages = updatedMessages.filter(
+            (message) => message.channelId === defaultChannel.id
+          );
           dispatch(addMessage(channelMessages));
         }
         toast.success(t('modalWindows.deleteChannel.toastDeleteChannel'));
