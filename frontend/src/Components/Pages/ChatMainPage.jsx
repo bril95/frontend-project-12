@@ -14,7 +14,6 @@ import {
 } from '../../Slice/channelsSlice';
 import AddChannel from '../ModalWindows/AddChannel';
 import { addMessage, selectMessages } from '../../Slice/messagesSlice';
-
 import MessageForm from '../MessageForm';
 import MessageList from '../MessageList';
 import { selectDefaultChannel } from '../../Selectors/channelsSelectors';
@@ -78,9 +77,7 @@ const MainPage = () => {
       <div className="h-100">
         <div className="h-100" id="chat">
           <div className="d-flex flex-column h-100">
-            <HeaderNavbar
-              showExitButton={true}
-            />
+            <HeaderNavbar showExitButton />
             <Container className="h-100 my-4 overflow-hidden rounded shadow">
               <Row className="h-100 bg-white flex-md-row">
                 <Col xs={4} md={2} className="border-end px-0 bg-light flex-column h-100 d-flex">

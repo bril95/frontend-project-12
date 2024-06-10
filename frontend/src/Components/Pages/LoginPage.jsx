@@ -10,13 +10,13 @@ import { useLoginUserMutation } from '../../api/usersApi';
 import useLoginUser from '../../hooks/useLoginUser';
 
 const Login = () => {
-  const [user, { isLoading, isError }] = useLoginUserMutation();
+  const [userResponse, { isLoading, isError }] = useLoginUserMutation();
   const { t } = useTranslation();
   const loginUser = useLoginUser();
 
   const handleSubmit = async (values) => {
     try {
-      const response = await user(values);
+      const response = await userResponse(values);
       loginUser(response.data);
     } catch (error) {
       console.error(error);
