@@ -1,15 +1,13 @@
 import {
-  Formik, Form,
-  Field, ErrorMessage,
+  Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import {
-  Container, Navbar,
-  Card, Button,
+  Container, Navbar, Card, Button,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { validationSchemaLoginPage } from '../internationalization/validation';
-import { useLoginUserMutation } from '../api/usersApi';
-import useLoginUser from '../hooks/useLoginUser'; 
+import { validationSchemaLoginPage } from '../../internationalization/validation';
+import { useLoginUserMutation } from '../../api/usersApi';
+import useLoginUser from '../../hooks/useLoginUser';
 
 const Login = () => {
   const [user, { isLoading, isError }] = useLoginUserMutation();

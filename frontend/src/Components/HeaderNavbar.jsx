@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import AuthorizationContext from '../Context/AuthorizationContext';
 
-const HeadersPage = (showExitButton) => {
+const HeaderNavbar = ({ showExitButton }) => {
   const { logout } = useContext(AuthorizationContext);
   const { t } = useTranslation();
 
@@ -21,4 +21,4 @@ const HeadersPage = (showExitButton) => {
   );
 };
 
-export default HeadersPage;
+export default HeaderNavbar;

@@ -4,10 +4,10 @@ import {
 import { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
-import LoginPage from './Components/LoginPage';
-import NotFoundPage from './Components/NotFoundPage';
-import ChatMainPage from './Components/ChatMainPage';
-import SignUpPage from './Components/SignUpPage';
+import LoginPage from './Components/Pages/LoginPage';
+import NotFoundPage from './Components/Pages/NotFoundPage';
+import ChatMainPage from './Components/Pages/ChatMainPage';
+import SignUpPage from './Components/Pages/SignUpPage';
 import routes from './api/routes';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthorizationProvider from './Context/AuthorizationProvider';

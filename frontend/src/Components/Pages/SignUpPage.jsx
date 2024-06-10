@@ -1,14 +1,13 @@
 import {
-  Formik, Form,
-  Field, ErrorMessage,
+  Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import { Container, Card, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { validationSignUpPage } from '../internationalization/validation';
-import { useAddUserMutation } from '../api/usersApi';
-import HeadersPage from './HeadersPage';
-import useLoginUser from '../hooks/useLoginUser'; 
+import { validationSignUpPage } from '../../internationalization/validation';
+import { useAddUserMutation } from '../../api/usersApi';
+import HeaderNavbar from '../HeaderNavbar';
+import useLoginUser from '../../hooks/useLoginUser';
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
@@ -44,7 +43,7 @@ const SignUp = () => {
       <div className="h-100">
         <div className="h-100" id="chat">
           <div className="d-flex flex-column h-100">
-            <HeadersPage
+            <HeaderNavbar
               showExitButton={false}
             />
             <Container fluid className="h-100 d-flex justify-content-center align-items-center">
