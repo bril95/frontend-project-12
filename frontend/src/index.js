@@ -2,9 +2,8 @@ import ReactDOM from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import filter from 'leo-profanity';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, Provider } from 'react-redux';
 import { useEffect } from 'react';
-import { Provider } from 'react-redux';
 import './index.css';
 import i18n from './internationalization/i18n';
 import App from './App';
@@ -46,10 +45,10 @@ const Init = () => {
 
 const app = () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(    
+  root.render(
     <Provider store={store}>
       <Init />
-    </Provider>
+    </Provider>,
   );
 };
 

@@ -32,7 +32,6 @@ const MainPage = () => {
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
   const defaultChannel = useSelector(selectDefaultChannel);
-
   const { data: channels } = useGetChannelsQuery();
   const [addChannel] = useAddChannelMutation();
   const { data: allMessages, refetch } = useGetMessagesQuery();

@@ -1,5 +1,5 @@
 import {
-  BrowserRouter, Routes, Route, Navigate
+  BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
 import { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +26,8 @@ const App = () => (
         <Route path={routes.pages.loginPage()} element={<LoginPage />} />
         <Route path={routes.pages.signUpPage()} element={<SignUpPage />} />
         <Route path="/" element={<ProtectedRoute element={<ChatMainPage />} />} />
-        <Route path={routes.pages.chatMainPage()}
+        <Route 
+          path={routes.pages.chatMainPage()}
           element={<ProtectedRoute element={<ChatMainPage />} />}
         />
         <Route path={routes.pages.notFoundPage()} element={<NotFoundPage />} />

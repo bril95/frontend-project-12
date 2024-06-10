@@ -18,7 +18,7 @@ const AuthorizationProvider = ({ children }) => {
     },
     [dispatch, navigate],
   );
-  
+
   const token = localStorage.getItem('token');
 
   const logout = useMemo(
@@ -33,10 +33,9 @@ const AuthorizationProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      dispatch(setAuthToken(token));
-      dispatch(setIsAuthorized(true));
+      login(token); 
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, login]);
 
   const value = useMemo(() => ({ isAuthorized, login, logout }), [isAuthorized, login, logout]);
 
