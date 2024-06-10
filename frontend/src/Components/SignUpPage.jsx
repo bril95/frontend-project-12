@@ -34,7 +34,7 @@ const SignUp = () => {
       } else {
         resetForm();
         setSubmitting(false);
-        const token = response.data.token;
+        const { token } = response.data;
         dispatch(setCurrentUsername(values.username));
         localStorage.setItem('username', values.username);
         login(token);

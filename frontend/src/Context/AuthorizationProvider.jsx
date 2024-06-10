@@ -7,7 +7,6 @@ import { setAuthToken, setIsAuthorized, selectIsAuthorized } from '../Slice/auth
 const AuthorizationProvider = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
   const isAuthorized = useSelector(selectIsAuthorized);
 
   const login = useMemo(
@@ -19,6 +18,8 @@ const AuthorizationProvider = ({ children }) => {
     },
     [dispatch, navigate],
   );
+  
+  const token = localStorage.getItem('token');
 
   const logout = useMemo(
     () => () => {
@@ -36,7 +37,6 @@ const AuthorizationProvider = ({ children }) => {
       dispatch(setIsAuthorized(true));
     }
   }, [dispatch, token]);
-
 
   const value = useMemo(() => ({ isAuthorized, login, logout }), [isAuthorized, login, logout]);
 

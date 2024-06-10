@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter, Routes, Route, Navigate
+} from 'react-router-dom';
 import { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
@@ -24,7 +26,9 @@ const App = () => (
         <Route path={routes.pages.loginPage()} element={<LoginPage />} />
         <Route path={routes.pages.signUpPage()} element={<SignUpPage />} />
         <Route path="/" element={<ProtectedRoute element={<ChatMainPage />} />} />
-        <Route path={routes.pages.chatMainPage()} element={<ProtectedRoute element={<ChatMainPage />} />} />
+        <Route path={routes.pages.chatMainPage()}
+          element={<ProtectedRoute element={<ChatMainPage />} />}
+        />
         <Route path={routes.pages.notFoundPage()} element={<NotFoundPage />} />
       </Routes>
     </AuthorizationProvider>
