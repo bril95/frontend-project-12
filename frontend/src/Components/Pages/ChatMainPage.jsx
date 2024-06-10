@@ -120,7 +120,6 @@ const MainPage = () => {
       </div>
       <AddChannel
         show={showModal}
-        setShowModal={setShowModal}
         handleSubmitModal={handleAddChannel}
         handleClose={handleCloseModal}
       />
