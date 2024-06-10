@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Button, Container, Row,
   Nav, Dropdown, Col,
@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
   useGetChannelsQuery, useAddChannelMutation,
   useGetMessagesQuery, useEditChannelMutation, useRemoveChannelMutation,
@@ -22,29 +21,17 @@ import RenameChannelModal from './ModalWindows/RenameChannel';
 import DeleteChannelModal from './ModalWindows/RemoveChannel';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
-import AuthorizationContext from '../Context/AuthorizationContext';
 import { selectDefaultChannel } from '../Selectors/channelsSelectors';
 import HeadersPage from './HeadersPage';
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const channelsStore = useSelector(selectChannels);
   const currentChannel = useSelector(selectCurrentChannel);
-  const token = localStorage.getItem('token');
   const [showModal, setShowModal] = useState(false);
   const messagesStore = useSelector(selectMessages);
   const { t } = useTranslation();
   const defaultChannel = useSelector(selectDefaultChannel);
-  const { login } = useContext(AuthorizationContext);
-
-  useEffect(() => {
-    if (token === null) {
-      navigate('/login');
-    } else {
-      login(token);
-    }
-  }, [token, login, navigate]);
 
   const { data: channels } = useGetChannelsQuery();
   const [addChannel] = useAddChannelMutation();
