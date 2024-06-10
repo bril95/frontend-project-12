@@ -3,22 +3,22 @@ import {
   Field, ErrorMessage,
 } from 'formik';
 import { Container, Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setCurrentUsername } from '../Slice/usernameSlice';
 import { validationSignUpPage } from '../internationalization/validation';
 import { useAddUserMutation } from '../api/usersApi';
 import HeadersPage from './HeadersPage';
+import AuthorizationContext from '../Context/AuthorizationContext';
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
-  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const validationSchema = validationSignUpPage(t);
+  const { login } = useContext(AuthorizationContext);
 
   const initialValues = {
     username: '',
@@ -34,11 +34,10 @@ const SignUp = () => {
       } else {
         resetForm();
         setSubmitting(false);
-        const userToken = response.data.token;
-        localStorage.setItem('token', userToken);
+        const token = response.data.token;
         dispatch(setCurrentUsername(values.username));
         localStorage.setItem('username', values.username);
-        navigate('/');
+        login(token);
       }
     } catch (errorRegistration) {
       console.error(errorRegistration);
