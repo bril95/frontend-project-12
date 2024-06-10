@@ -3,22 +3,19 @@ import {
   Field, ErrorMessage,
 } from 'formik';
 import { Container, Card, Button } from 'react-bootstrap';
-import { useState, useContext } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { setCurrentUsername } from '../Slice/usernameSlice';
 import { validationSignUpPage } from '../internationalization/validation';
 import { useAddUserMutation } from '../api/usersApi';
 import HeadersPage from './HeadersPage';
-import AuthorizationContext from '../Context/AuthorizationContext';
+import useLoginUser from '../hooks/useLoginUser'; 
 
 const SignUp = () => {
   const [addUser] = useAddUserMutation();
   const [error, setError] = useState(null);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const validationSchema = validationSignUpPage(t);
-  const { login } = useContext(AuthorizationContext);
+  const loginUser = useLoginUser();
 
   const initialValues = {
     username: '',
@@ -34,10 +31,7 @@ const SignUp = () => {
       } else {
         resetForm();
         setSubmitting(false);
-        const { token } = response.data;
-        dispatch(setCurrentUsername(values.username));
-        localStorage.setItem('username', values.username);
-        login(token);
+        loginUser(response.data);
       }
     } catch (errorRegistration) {
       console.error(errorRegistration);

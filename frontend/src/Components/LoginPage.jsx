@@ -6,27 +6,20 @@ import {
   Container, Navbar,
   Card, Button,
 } from 'react-bootstrap';
-import { useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { validationSchemaLoginPage } from '../internationalization/validation';
 import { useLoginUserMutation } from '../api/usersApi';
-import AuthorizationContext from '../Context/AuthorizationContext';
-import { setCurrentUsername } from '../Slice/usernameSlice';
+import useLoginUser from '../hooks/useLoginUser'; 
 
 const Login = () => {
-  const [loginUser, { isLoading, isError }] = useLoginUserMutation();
+  const [user, { isLoading, isError }] = useLoginUserMutation();
   const { t } = useTranslation();
-  const { login } = useContext(AuthorizationContext);
-  const dispatch = useDispatch();
+  const loginUser = useLoginUser();
 
   const handleSubmit = async (values) => {
     try {
-      const response = await loginUser(values);
-      const userToken = response.data.token;
-      login(userToken);
-      dispatch(setCurrentUsername(values.username));
-      localStorage.setItem('username', values.username);
+      const response = await user(values);
+      loginUser(response.data);
     } catch (error) {
       console.error(error);
     }
