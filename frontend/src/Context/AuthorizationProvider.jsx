@@ -33,7 +33,7 @@ const AuthorizationProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      login(token); 
+      login(token);
     }
   }, [dispatch, token, login]);
 

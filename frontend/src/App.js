@@ -26,7 +26,7 @@ const App = () => (
         <Route path={routes.pages.loginPage()} element={<LoginPage />} />
         <Route path={routes.pages.signUpPage()} element={<SignUpPage />} />
         <Route path="/" element={<ProtectedRoute element={<ChatMainPage />} />} />
-        <Route 
+        <Route
           path={routes.pages.chatMainPage()}
           element={<ProtectedRoute element={<ChatMainPage />} />}
         />
