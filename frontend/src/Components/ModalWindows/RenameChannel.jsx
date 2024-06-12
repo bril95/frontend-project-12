@@ -4,15 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { validationSchemaChat } from '../../internationalization/validation';
-import { selectChannels } from '../../Slice/channelsSlice';
+import { selectChannelsName } from '../../Selectors/channelsSelectors';
 
 const RenameChannelModal = ({
   show, handleClose,
   handleRename, initialValues,
 }) => {
   const { t } = useTranslation();
-  const channelsStore = useSelector(selectChannels);
-  const channelsName = channelsStore.map((channels) => channels.name);
+  const channelsName = useSelector(selectChannelsName);
 
   const handleFormSubmit = (values) => {
     handleRename(values.channelName);
